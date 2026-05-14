@@ -69,9 +69,9 @@ export const Hero = () => {
                 </motion.span>
 
                 {/* Teks Utama (Besar di Tengah) */}
-                <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl font-bold leading-[1.2] tracking-tighter uppercase mb-6 text-primary">
+                <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl leading-[1.2] tracking-tighter uppercase mb-6 text-primary">
                     Hello, I am <br />
-                    <span className="italic font-light text-accent drop-shadow-glow-red">
+                    <span className="italic font-light font-bold text-accent drop-shadow-glow-red">
                         {CLIENT_PROFILE.fullName}
                     </span>
                 </motion.h1>

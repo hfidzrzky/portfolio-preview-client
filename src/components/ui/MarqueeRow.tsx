@@ -19,9 +19,11 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
     const containerRef = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    const [isTouching, setIsTouching] = useState(false);
+    const touchTimeout = useRef<NodeJS.Timeout | null>(null);
 
     // KUNCI PERBAIKAN: Ref ini menyimpan posisi desimal murni (mengatasi bug browser)
-    const positionRef = useRef(0); 
+    const positionRef = useRef(0);
     const startX = useRef(0);
     const scrollLeftPos = useRef(0);
 
@@ -36,7 +38,7 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
         let isInitialized = false;
 
         const render = () => {
-            // 1. Inisialisasi aman (memastikan container sudah punya scrollWidth)
+            // 1. Inisialisasi posisi awal secara aman
             if (!isInitialized) {
                 if (direction === 'right') {
                     positionRef.current = container.scrollWidth / 2;
@@ -44,25 +46,29 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
                 isInitialized = true;
             }
 
-            // 2. Kalkulasi murni di memori JS (Tidak peduli browser membulatkan atau tidak)
-            if (!isHovered && !isDragging) {
-                if (direction === 'left') {
-                    positionRef.current += speedValue;
-                    if (positionRef.current >= container.scrollWidth / 2) {
-                        positionRef.current -= container.scrollWidth / 2;
-                    }
-                } else {
-                    positionRef.current -= speedValue;
-                    if (positionRef.current <= 0) {
-                        positionRef.current += container.scrollWidth / 2;
-                    }
-                }
-                // 3. Terapkan hasil kalkulasi ke DOM
-                container.scrollLeft = positionRef.current;
-                
-            } else if (isDragging) {
-                // 4. Sinkronisasi saat user menggeser manual agar animasi tidak melompat saat dilepas
+            // 2. KUNCI REFAKTOR: Tambahkan kondisi 'isTouching'
+            // Kita berhenti melakukan animasi otomatis JIKA:
+            // - Sedang di-hover (Desktop)
+            // - Sedang di-drag mouse (Desktop)
+            // - Sedang disentuh/meluncur (Mobile)
+            if (isHovered || isDragging || isTouching) {
+                // SELAMA interaksi manual, JavaScript hanya bertugas "mencatat" posisi scroll
+                // agar saat dilepas, animasi tahu harus lanjut dari mana.
                 positionRef.current = container.scrollLeft;
+            } else {
+                // 3. Animasi Otomatis (Hanya jalan jika benar-benar tidak ada interaksi)
+                const factor = direction === 'left' ? 1 : -1;
+                positionRef.current += speedValue * factor;
+
+                // Handle Infinite Loop (Reset posisi jika sudah mencapai setengah konten)
+                if (direction === 'left' && positionRef.current >= container.scrollWidth / 2) {
+                    positionRef.current -= container.scrollWidth / 2;
+                } else if (direction === 'right' && positionRef.current <= 0) {
+                    positionRef.current += container.scrollWidth / 2;
+                }
+
+                // Terapkan ke DOM
+                container.scrollLeft = positionRef.current;
             }
 
             animationFrameId = requestAnimationFrame(render);
@@ -70,7 +76,7 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
 
         animationFrameId = requestAnimationFrame(render);
         return () => cancelAnimationFrame(animationFrameId);
-    }, [isHovered, isDragging, direction, speedValue]);
+    }, [isHovered, isDragging, isTouching, direction, speedValue]);
 
 
     // --- LOGIKA DRAG MANUAL ---
@@ -93,8 +99,20 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
         if (!isDragging || !containerRef.current) return;
         e.preventDefault();
         const x = e.pageX - (containerRef.current.offsetLeft || 0);
-        const walk = (x - startX.current) * 1.5; 
+        const walk = (x - startX.current) * 1.5;
         containerRef.current.scrollLeft = scrollLeftPos.current - walk;
+    };
+
+    const onTouchStart = () => {
+        setIsTouching(true);
+        if (touchTimeout.current) clearTimeout(touchTimeout.current);
+    };
+
+    const onTouchEnd = () => {
+        // Memberikan jeda 800ms agar efek meluncur HP selesai sebelum JS mengambil alih
+        touchTimeout.current = setTimeout(() => {
+            setIsTouching(false);
+        }, 800);
     };
 
     return (
@@ -106,8 +124,8 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
             onMouseMove={onMouseMove}
-            onTouchStart={() => setIsHovered(true)}
-            onTouchEnd={() => setIsHovered(false)}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
         >
             <div className="flex w-max">
                 {/* BLOK 1 */}
@@ -115,10 +133,10 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
                     {repeatedItems.map((item, index) => (
                         <div
                             key={`block1-${item.id}-${index}`}
-                            className="relative w-28 md:w-40 lg:w-52 aspect-video bg-zinc-900 overflow-hidden shrink-0"
+                            className="relative w-40 md:w-56 lg:w-72 aspect-video bg-zinc-900 overflow-hidden shrink-0"
                         >
                             <Image
-                                src={item.src} 
+                                src={item.src}
                                 alt={item.alt || "Archived Frame"}
                                 fill
                                 sizes="(max-width: 768px) 112px, (max-width: 1024px) 160px, 208px"
@@ -134,10 +152,10 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
                     {repeatedItems.map((item, index) => (
                         <div
                             key={`block2-${item.id}-${index}`}
-                            className="relative w-28 md:w-40 lg:w-52 aspect-video bg-zinc-900 overflow-hidden shrink-0"
+                            className="relative w-40 md:w-56 lg:w-72 aspect-video bg-zinc-900 overflow-hidden shrink-0"
                         >
                             <Image
-                                src={item.src} 
+                                src={item.src}
                                 alt={item.alt || "Archived Frame"}
                                 fill
                                 sizes="(max-width: 768px) 112px, (max-width: 1024px) 160px, 208px"

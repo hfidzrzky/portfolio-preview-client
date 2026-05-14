@@ -102,7 +102,7 @@ export const About = () => {
                     {/* Item 4: Tanda Kutip */}
                     <motion.span 
                         variants={itemVariants}
-                        className="text-accent/20 block mb-6 text-7xl md:text-9xl font-serif leading-none h-12 italic select-none"
+                        className="text-accent/50 block mb-6 text-7xl md:text-9xl font-serif leading-none h-12 italic select-none"
                     >
                         &ldquo;
                     </motion.span>
