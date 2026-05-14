@@ -46,28 +46,18 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
                 isInitialized = true;
             }
 
-            // 2. KUNCI REFAKTOR: Tambahkan kondisi 'isTouching'
-            // Kita berhenti melakukan animasi otomatis JIKA:
-            // - Sedang di-hover (Desktop)
-            // - Sedang di-drag mouse (Desktop)
-            // - Sedang disentuh/meluncur (Mobile)
             if (isHovered || isDragging || isTouching) {
-                // SELAMA interaksi manual, JavaScript hanya bertugas "mencatat" posisi scroll
-                // agar saat dilepas, animasi tahu harus lanjut dari mana.
                 positionRef.current = container.scrollLeft;
             } else {
-                // 3. Animasi Otomatis (Hanya jalan jika benar-benar tidak ada interaksi)
                 const factor = direction === 'left' ? 1 : -1;
                 positionRef.current += speedValue * factor;
 
-                // Handle Infinite Loop (Reset posisi jika sudah mencapai setengah konten)
                 if (direction === 'left' && positionRef.current >= container.scrollWidth / 2) {
                     positionRef.current -= container.scrollWidth / 2;
                 } else if (direction === 'right' && positionRef.current <= 0) {
                     positionRef.current += container.scrollWidth / 2;
                 }
 
-                // Terapkan ke DOM
                 container.scrollLeft = positionRef.current;
             }
 
@@ -140,7 +130,6 @@ export const MarqueeRow = ({ items, direction = 'left', speed = 'normal' }: Marq
                                 alt={item.alt || "Archived Frame"}
                                 fill
                                 sizes="(max-width: 768px) 112px, (max-width: 1024px) 160px, 208px"
-                                // Warna asli sepenuhnya (tanpa grayscale), hanya memainkan opacity
                                 className="object-cover opacity-60 hover:opacity-100 transition-all duration-700 pointer-events-none"
                             />
                         </div>

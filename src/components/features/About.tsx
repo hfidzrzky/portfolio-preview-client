@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from "next/image";
 import { motion, Variants } from 'framer-motion';
 import { CLIENT_PROFILE } from "@/constants";
 
@@ -54,7 +55,7 @@ export const About = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
-                    className="md:col-span-5 flex flex-col justify-between"
+                    className="md:col-span-5 flex flex-col justify-start space-y-10"
                 >
                     {/* Item 1: Judul Section */}
                     <motion.div variants={itemVariants}>
@@ -62,6 +63,22 @@ export const About = () => {
                             <span className="w-12 border-b border-accent drop-shadow-glow-red"></span>
                             About
                         </h2>
+                    </motion.div>
+
+                    <motion.div
+                        variants={itemVariants}
+                        className="group relative overflow-hidden bg-zinc-900 aspect-[3/2] rounded-sm"
+                    >
+                        {/* Subtle Red Overlay saat di-hover agar konsisten dengan kartu projects */}
+                        <div className="absolute inset-0 z-10 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+                        <Image
+                            src="/images/profile-ilham.jpeg"
+                            alt="Ilham Hakim - Cinematic Specialist"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 40vw"
+                            className="object-cover object-center grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+                        />
                     </motion.div>
 
                     <div className="space-y-10">
@@ -99,23 +116,35 @@ export const About = () => {
                     viewport={{ once: true, margin: "-100px" }}
                     className="md:col-span-7 flex flex-col justify-center"
                 >
-                    {/* Item 4: Tanda Kutip */}
-                    <motion.span 
+                    {/* ITEM BARU: Professional Statement (Pindahan dari Hero) */}
+                    <motion.div
                         variants={itemVariants}
-                        className="text-accent/50 block mb-6 text-7xl md:text-9xl font-serif leading-none h-12 italic select-none"
+                        className="mb-12 border-l-2 border-accent pl-8 py-2"
+                    >
+                        <p className="text-xl md:text-2xl font-light leading-relaxed text-support tracking-wide">
+                            A <span className="text-primary font-medium">{CLIENT_PROFILE.major}</span> specialist
+                            from <span className="text-primary font-medium">{CLIENT_PROFILE.origin}</span>.
+                            <br className="hidden lg:block" />
+                            Focusing on cinematic storytelling through light and frames.
+                        </p>
+                    </motion.div>
+
+                    {/* Item 4: Tanda Kutip (Tipografi diturunkan sedikit agar tidak bertabrakan) */}
+                    <motion.span
+                        variants={itemVariants}
+                        className="text-accent/30 block mb-4 text-7xl md:text-8xl font-serif leading-none italic select-none"
                     >
                         &ldquo;
                     </motion.span>
-                    
+
                     {/* Item 5: Teks Bio */}
-                    <motion.h3 
+                    <motion.h3
                         variants={itemVariants}
                         className="text-2xl md:text-3xl lg:text-4xl font-light leading-[1.6] text-primary tracking-wide"
                     >
                         {CLIENT_PROFILE.bio}
                     </motion.h3>
                 </motion.div>
-
             </div>
         </section>
     );

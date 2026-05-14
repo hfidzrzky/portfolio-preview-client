@@ -12,16 +12,16 @@ export default function HomePage() {
                 <Hero />
             </section>
 
-            <section id="about" className="scroll-mt-20">
+            <section id="about">
                 <About />
             </section>
 
-            <section id="projects" className="scroll-mt-20">
+            <section id="projects">
                 <ProjectGallery />
                 <WorkOnSet />
             </section>
 
-            <section id="contact" className="scroll-mt-20">
+            <section id="contact">
                 <Contact />
             </section>
 

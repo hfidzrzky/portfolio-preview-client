@@ -5,15 +5,6 @@ import { motion, Variants } from "framer-motion"; // Tambahkan tipe Variants di 
 import { CLIENT_PROFILE } from "@/constants";
 
 export const Hero = () => {
-    // 1. Definisikan tipe : Variants agar TypeScript tidak error
-    const bgVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { duration: 1.5, ease: "linear" }
-        }
-    };
-
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
@@ -38,60 +29,50 @@ export const Hero = () => {
     };
 
     return (
-        <section className="relative min-h-screen flex flex-col justify-center items-center px-6 text-center overflow-hidden">
-            {/* Background dengan efek fade-in */}
-            <motion.div 
-                className="absolute inset-0 z-0"
-                variants={bgVariants}
-                initial="hidden"
-                animate="visible"
-            >
-                <Image
-                    src="/images/frames/OIP.jpg"
-                    alt="Cinematic background"
-                    fill
-                    priority 
-                    className="object-cover opacity-60"  
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-[#0a0a0a]"></div>
+    // Menggunakan bg-[#0a0a0a] agar matching dengan About
+    <section className="relative min-h-screen flex flex-col justify-center items-center px-6 text-center overflow-hidden bg-[#0a0a0a]">
+        
+        {/* Background Layer */}
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.4 }} // Opacity rendah agar nuansa gelap lebih dominan
+            transition={{ duration: 2 }}
+            className="absolute inset-0 z-0"
+        >
+            <Image src="/images/hero-bg.png" alt="Cinematic" fill priority className="object-cover" />
+            
+            {/* REFAKTOR GRADASI: 
+                Menggunakan from-[85%] agar gradasi hanya muncul tipis di bagian paling bawah
+                sehingga tidak mengganggu keterbacaan teks di tengah layar.
+            */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[85%] to-[#0a0a0a]"></div>
+        </motion.div>
+
+        {/* Content Layer */}
+        <motion.div className="relative z-10 max-w-5xl" variants={containerVariants} initial="hidden" animate="visible">
+            {/* Label: Menggunakan Zinc-400 untuk kesan muted premium */}
+            <motion.span variants={itemVariants} className="text-[10px] md:text-xs uppercase tracking-[0.6em] text-zinc-400 mb-8 font-semibold block">
+                Portfolio
+            </motion.span>
+
+            {/* Title: Zinc-100 memberikan kontras tinggi di atas background gelap */}
+            <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl leading-[1.1] tracking-tighter uppercase text-zinc-100 font-bold">
+                Exploring The <br />
+                <span className="italic font-serif font-light text-zinc-400 opacity-90">Visual Soul</span>
+            </motion.h1>
+
+            <motion.div variants={itemVariants} className="mt-12">
+                {/* Footer Text: Zinc-500 untuk informasi pendukung */}
+                <p className="text-sm md:text-base uppercase tracking-[0.3em] text-zinc-500 font-medium">
+                    {CLIENT_PROFILE.fullName}
+                </p>
             </motion.div>
+        </motion.div>
 
-            {/* Container Teks yang membungkus anak-anaknya agar muncul berurutan */}
-            <motion.div 
-                className="relative z-10 max-w-4xl flex flex-col items-center mt-10"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-            >
-                {/* Teks Atas (Kecil/Label) */}
-                <motion.span variants={itemVariants} className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-support mb-6 font-medium">
-                    Creative Professional
-                </motion.span>
-
-                {/* Teks Utama (Besar di Tengah) */}
-                <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl leading-[1.2] tracking-tighter uppercase mb-6 text-primary">
-                    Hello, I am <br />
-                    <span className="italic font-light font-bold text-accent drop-shadow-glow-red">
-                        {CLIENT_PROFILE.fullName}
-                    </span>
-                </motion.h1>
-
-                {/* Teks Bawah (Kecil & Elegan) */}
-                <motion.p variants={itemVariants} className="mt-4 text-sm md:text-base text-support max-w-lg leading-relaxed font-light tracking-wide">
-                    A {CLIENT_PROFILE.major} specialist from {CLIENT_PROFILE.origin}.
-                    Focusing on cinematic storytelling through light and frames.
-                </motion.p>
-            </motion.div>
-
-            {/* Indikator Scroll */}
-            <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="mt-16 animate-bounce relative z-10"
-            >
-                <div className="w-[2px] h-16 bg-gradient-to-b from-accent to-transparent rounded-full shadow-[0_0_8px_rgba(225,29,72,0.6)]"></div>
-            </motion.div>
-        </section>
-    );
+        {/* Scroll Indicator: Putih tipis transparan */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="absolute bottom-12 left-1/2 -translate-x-1/2">
+            <div className="w-[1px] h-20 bg-gradient-to-b from-zinc-100/30 to-transparent"></div>
+        </motion.div>
+    </section>
+);
 };
