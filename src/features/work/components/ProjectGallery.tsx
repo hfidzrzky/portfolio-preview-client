@@ -9,16 +9,22 @@ import { useProjectGallery } from "../hooks/useProjectGallery";
 
 export const ProjectGallery = () => {
     const {
-        currentPage,
-        totalPages,
-        currentProjects,
-        isCardsVisible,
+        projects,
+        scrollContainerRef,
+        scrollProgress,
+        canScrollLeft,
+        canScrollRight,
+        isDragging,
         isMarqueeVisible,
         isGalleryVisible,
         sectionRef,
         galleryRef,
-        handlePageChange,
-    } = useProjectGallery(6);
+        scrollByStep,
+        handleMouseDown,
+        handleMouseMove,
+        handleMouseUpOrLeave,
+        handleClickCapture,
+    } = useProjectGallery();
 
     return (
         <Section ref={sectionRef} id="projects" containerSize="full" className="min-h-screen flex flex-col space-y-32">
@@ -37,70 +43,107 @@ export const ProjectGallery = () => {
                 </div>
             </div>
 
-            {/* SELECTED WORKS SECTION */}
-            <div ref={galleryRef} className="max-w-7xl mx-auto w-full px-6 md:px-16">
-                <SectionHeader
-                    badge="Selected Works"
-                    className={`transition-all duration-1000 ease-out ${
-                        isGalleryVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                    }`}
-                />
+            {/* SELECTED WORKS SECTION - 1 ROW SMOOTH HORIZONTAL REEL */}
+            <div ref={galleryRef} className="max-w-7xl mx-auto w-full px-6 md:px-16 flex flex-col">
+                {/* Header with Counter & Navigation Controls */}
+                <div className="w-full flex items-end justify-between mb-8">
+                    <div>
+                        <h2 className={`text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center gap-4 font-bold transition-all duration-700 ${
+                            isGalleryVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                        }`}>
+                            <span className="w-12 border-b border-accent drop-shadow-glow-red" />
+                            Selected Works
+                        </h2>
+                        <p className="mt-2 text-[10px] md:text-xs text-support/60 tracking-[0.2em] uppercase font-light">
+                            Featured Commercial & Narrative Films
+                        </p>
+                    </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-                    {currentProjects.map((project, index) => (
-                        <div 
-                            key={project.id}
-                            style={{ transitionDelay: `${index * 150}ms` }}
-                            className={`transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                isCardsVisible && isGalleryVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+                    {/* Navigation Buttons & Total Counter */}
+                    <div className="hidden md:flex items-center gap-4">
+                        <span className="font-mono text-xs text-support/50 tracking-widest mr-2">
+                            {projects.length < 10 ? `0${projects.length}` : projects.length} WORKS
+                        </span>
+                        <button
+                            type="button"
+                            onClick={() => scrollByStep("left")}
+                            disabled={!canScrollLeft}
+                            aria-label="Previous project"
+                            className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                                canScrollLeft
+                                    ? "border-white/20 text-primary hover:border-accent hover:text-accent hover:bg-accent/10 cursor-pointer"
+                                    : "border-white/5 text-support/20 cursor-not-allowed"
                             }`}
                         >
-                            <ProjectCard project={project} />
-                        </div>
-                    ))}
-                </div>
-
-                {totalPages > 1 && (
-                    <div className={`mt-24 flex justify-center items-center gap-6 transition-all duration-1000 delay-500 ${isGalleryVisible ? "opacity-100" : "opacity-0"}`}>
-                        <button 
-                            onClick={() => handlePageChange(currentPage - 1)} 
-                            disabled={currentPage === 1 || !isCardsVisible} 
-                            className={`text-[10px] uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${
-                                currentPage === 1 ? "text-support/20 cursor-not-allowed" : "text-support hover:text-accent cursor-pointer"
-                            }`}
-                        >
-                            <span>&larr;</span> Prev
+                            <span className="text-sm">&larr;</span>
                         </button>
-                        <div className="flex gap-2">
-                            {Array.from({ length: totalPages }).map((_, index) => {
-                                const pageNum = index + 1;
-                                return (
-                                    <button 
-                                        key={pageNum} 
-                                        onClick={() => handlePageChange(pageNum)} 
-                                        disabled={!isCardsVisible} 
-                                        className={`w-8 h-8 flex items-center justify-center text-xs font-mono transition-all duration-300 border cursor-pointer ${
-                                            currentPage === pageNum 
-                                                ? "border-accent text-accent bg-accent/5" 
-                                                : "border-white/5 text-support/60 hover:border-white/20 hover:text-primary"
-                                        }`}
-                                    >
-                                        {pageNum}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                        <button 
-                            onClick={() => handlePageChange(currentPage + 1)} 
-                            disabled={currentPage === totalPages || !isCardsVisible} 
-                            className={`text-[10px] uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${
-                                currentPage === totalPages ? "text-support/20 cursor-not-allowed" : "text-support hover:text-accent cursor-pointer"
+                        <button
+                            type="button"
+                            onClick={() => scrollByStep("right")}
+                            disabled={!canScrollRight}
+                            aria-label="Next project"
+                            className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                                canScrollRight
+                                    ? "border-white/20 text-primary hover:border-accent hover:text-accent hover:bg-accent/10 cursor-pointer"
+                                    : "border-white/5 text-support/20 cursor-not-allowed"
                             }`}
                         >
-                            Next <span>&rarr;</span>
+                            <span className="text-sm">&rarr;</span>
                         </button>
                     </div>
-                )}
+                </div>
+
+                {/* Horizontal Scroll Track Container */}
+                <div className="relative w-full">
+                    {/* Visual Cue Edge Gradient (Left & Right Mask) */}
+                    <div
+                        className={`pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-linear-to-r from-dark to-transparent z-10 transition-opacity duration-300 ${
+                            canScrollLeft ? "opacity-100" : "opacity-0"
+                        }`}
+                    />
+                    <div
+                        className={`pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-linear-to-l from-dark to-transparent z-10 transition-opacity duration-300 ${
+                            canScrollRight ? "opacity-100" : "opacity-0"
+                        }`}
+                    />
+
+                    {/* Scrollable Row - Exactly inside the max-w-7xl bounds */}
+                    <div
+                        ref={scrollContainerRef}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={handleMouseUpOrLeave}
+                        onMouseLeave={handleMouseUpOrLeave}
+                        onClickCapture={handleClickCapture}
+                        onDragStart={(e) => e.preventDefault()}
+                        className={`flex gap-6 md:gap-8 overflow-x-auto scrollbar-none select-none pb-6 transition-opacity duration-1000 will-change-scroll ${
+                            isDragging
+                                ? "cursor-grabbing scroll-auto snap-none"
+                                : "cursor-grab scroll-smooth snap-x snap-mandatory"
+                        } ${isGalleryVisible ? "opacity-100" : "opacity-0"}`}
+                        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                    >
+                        {projects.map((project) => (
+                            <div
+                                key={project.id}
+                                data-project-card
+                                className="w-70 sm:w-90 md:w-95 lg:w-100 flex-none snap-start group"
+                            >
+                                <ProjectCard project={project} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Minimalist Progress Bar Track */}
+                <div className="w-full mt-2">
+                    <div className="w-full h-0.5 bg-white/5 relative overflow-hidden rounded-full">
+                        <div
+                            className="h-full bg-accent transition-all duration-150 ease-out drop-shadow-glow-red"
+                            style={{ width: `${Math.max(12, scrollProgress)}%` }}
+                        />
+                    </div>
+                </div>
             </div>
         </Section>
     );

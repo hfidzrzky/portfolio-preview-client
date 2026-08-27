@@ -9,6 +9,7 @@ import { Section, SectionHeader } from "@/shared/ui";
 
 export const About = () => {
     const { leftContainerVariants, rightContainerVariants, itemVariants } = useAboutAnimation();
+    const [isImageActive, setIsImageActive] = React.useState(false);
 
     return (
         <Section id="about" className="min-h-screen flex items-center">
@@ -31,16 +32,26 @@ export const About = () => {
 
                     <motion.div
                         variants={itemVariants}
-                        className="group relative overflow-hidden bg-zinc-900 aspect-3/2 rounded-sm"
+                        onClick={() => setIsImageActive((prev) => !prev)}
+                        className="group relative overflow-hidden bg-zinc-900 aspect-3/2 rounded-sm cursor-pointer select-none"
                     >
-                        <div className="absolute inset-0 z-10 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                        <div 
+                            className={`absolute inset-0 z-10 bg-accent/10 transition-opacity duration-700 pointer-events-none ${
+                                isImageActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                            }`} 
+                        />
 
                         <Image
                             src="/images/profile-ilham.jpeg"
                             alt="Ilham Hakim - Cinematic Specialist"
                             fill
+                            draggable={false}
                             sizes="(max-width: 768px) 100vw, 40vw"
-                            className="object-cover object-center grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+                            className={`object-cover object-center transition-all duration-700 select-none ${
+                                isImageActive
+                                    ? "grayscale-0 scale-100"
+                                    : "grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100"
+                            }`}
                         />
                     </motion.div>
 

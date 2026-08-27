@@ -13,15 +13,18 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             href={project.url} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group flex flex-col gap-4 cursor-pointer"
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
+            className="group flex flex-col gap-4 cursor-pointer select-none"
         >
-            <div className="relative w-full aspect-video bg-zinc-900 overflow-hidden rounded-sm border border-white/5 transition-colors duration-500 group-hover:border-accent/30">
+            <div className="relative w-full aspect-video bg-zinc-900 overflow-hidden rounded-sm border border-white/5 transition-colors duration-500 group-hover:border-accent/30 pointer-events-none">
                 <Image 
                     src={project.thumbnail || "/images/frames/khoas1.png"} 
                     alt={project.title}
                     fill
+                    draggable={false}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                    className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] select-none pointer-events-none"
                 />
                 
                 <div className="absolute inset-0 bg-linear-to-t from-dark/90 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -33,7 +36,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 </div>
             </div>
 
-            <div className="flex flex-col px-1">
+            <div className="flex flex-col px-1 select-none pointer-events-none">
                 <div className="flex justify-between items-start gap-4">
                     <div className="flex flex-col flex-1 min-w-0">
                         <h3 className="text-base md:text-lg font-medium text-primary uppercase tracking-widest truncate group-hover:text-accent transition-colors duration-300">
