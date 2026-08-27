@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/shared/lib";
 
 export interface SectionHeaderProps {
-    badge: string;
+    badge?: string;
     title?: React.ReactNode;
     description?: React.ReactNode;
     align?: "left" | "center" | "split";
@@ -26,10 +26,12 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         return (
             <div className={cn("mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6", className)}>
                 <div>
-                    <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center gap-4 font-bold mb-3", badgeClassName)}>
-                        <span className="w-12 border-b border-accent drop-shadow-glow-red" />
-                        {badge}
-                    </h2>
+                    {badge && (
+                        <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center gap-4 font-bold mb-3", badgeClassName)}>
+                            <span className="w-12 border-b border-accent drop-shadow-glow-red" />
+                            {badge}
+                        </h2>
+                    )}
                     {title && (
                         <h3 className={cn("text-3xl md:text-4xl font-light text-primary uppercase tracking-wide", titleClassName)}>
                             {title}
@@ -48,11 +50,13 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
     if (align === "center") {
         return (
             <div className={cn("mb-12 md:mb-16 flex flex-col items-center text-center", className)}>
-                <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center justify-center gap-3 md:gap-4 font-bold mb-6", badgeClassName)}>
-                    <span className="w-8 md:w-12 border-b border-accent drop-shadow-glow-red" />
-                    {badge}
-                    <span className="w-8 md:w-12 border-b border-accent drop-shadow-glow-red" />
-                </h2>
+                {badge && (
+                    <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center justify-center gap-3 md:gap-4 font-bold mb-6", badgeClassName)}>
+                        <span className="w-8 md:w-12 border-b border-accent drop-shadow-glow-red" />
+                        {badge}
+                        <span className="w-8 md:w-12 border-b border-accent drop-shadow-glow-red" />
+                    </h2>
+                )}
                 {title && (
                     <h3 className={cn("text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-primary mb-6", titleClassName)}>
                         {title}
@@ -69,10 +73,12 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 
     return (
         <div className={cn("mb-12", className)}>
-            <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center gap-4 font-bold", badgeClassName)}>
-                <span className="w-12 border-b border-accent drop-shadow-glow-red" />
-                {badge}
-            </h2>
+            {badge && (
+                <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center gap-4 font-bold", badgeClassName)}>
+                    <span className="w-12 border-b border-accent drop-shadow-glow-red" />
+                    {badge}
+                </h2>
+            )}
             {title && (
                 <h3 className={cn("mt-3 text-2xl md:text-3xl font-light text-primary tracking-wide", titleClassName)}>
                     {title}

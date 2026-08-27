@@ -19,7 +19,6 @@ export const Clients: React.FC = () => {
                 viewport={{ once: true, margin: "-80px" }}
             >
                 <SectionHeader
-                    badge="Trusted By"
                     title={
                         <span className="italic font-serif">
                             <span className="text-support">Our</span>{" "}
