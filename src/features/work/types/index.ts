@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+
 export interface Project {
     id: string;
     title: string;
@@ -11,10 +13,10 @@ export interface Project {
 
 export interface WorkOnSetImage {
     id: number | string;
-    src: string;
+    src: string | StaticImageData;
     alt: string;
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
 }
 
 export interface ArchivedFrameItem {

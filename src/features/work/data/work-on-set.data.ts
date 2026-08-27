@@ -3,44 +3,32 @@ import type { WorkOnSetImage } from "../types";
 export const WORK_ON_SET_IMAGES: WorkOnSetImage[] = [
     {
         id: 1,
-        src: "/images/frames/OIP.jpg",
+        src: "/work-on-set/img-1.jpg",
         alt: "Directing the talent on set",
-        width: 1920,
-        height: 1080,
     },
     {
         id: 2,
-        src: "/images/frames/OIP.jpg",
+        src: "/work-on-set/img-2.jpg",
         alt: "Lighting setup",
-        width: 1080,
-        height: 1350,
     },
     {
         id: 3,
-        src: "/images/frames/OIP.jpg",
+        src: "/work-on-set/img-3.jpg",
         alt: "Camera gear",
-        width: 1000,
-        height: 1000,
     },
     {
         id: 4,
-        src: "/images/frames/OIP.jpg",
+        src: "/work-on-set/img-4.jpg",
         alt: "Reviewing footage",
-        width: 2000,
-        height: 800,
     },
     {
         id: 5,
-        src: "/images/frames/OIP.jpg",
+        src: "/work-on-set/img-5.jpg",
         alt: "Team discussion",
-        width: 1200,
-        height: 1600,
     },
     {
         id: 6,
-        src: "/images/frames/OIP.jpg",
+        src: "/work-on-set/img-6.jpg",
         alt: "Behind the monitor",
-        width: 1920,
-        height: 1280,
     }
 ];
