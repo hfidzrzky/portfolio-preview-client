@@ -13,9 +13,6 @@ export const About = () => {
 
     return (
         <Section id="about" className="min-h-screen flex items-center">
-            {/* Latar Belakang */}
-            <div className="absolute inset-0 pointer-events-none bg-radial-[at_bottom_right] from-accent/5 via-dark to-dark" />
-
             <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24">
                 {/* KOLOM KIRI: Label & Informasi Detail */}
                 <motion.div

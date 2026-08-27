@@ -18,9 +18,6 @@ export const Contact = () => {
             containerSize="compact"
             className="min-h-[70vh] flex flex-col justify-center"
         >
-            {/* Background Glow */}
-            <div className="absolute inset-0 pointer-events-none bg-radial-[at_bottom_center] from-accent/10 via-dark to-dark" />
-
             <div className="relative z-10 flex flex-col items-center justify-center flex-1 text-center w-full">
                 <SectionHeader
                     badge="Get In Touch"

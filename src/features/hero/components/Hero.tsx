@@ -25,7 +25,7 @@ export const Hero = () => {
                     priority 
                     className="object-cover" 
                 />
-                <div className="absolute inset-0 bg-linear-to-b from-transparent from-85% to-[#0a0a0a]" />
+                <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent via-70% to-[#0a0a0a]" />
             </motion.div>
 
             {/* Content Layer */}

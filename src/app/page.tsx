@@ -6,13 +6,13 @@ import { ScrollToTop } from "@/shared/ui";
 
 export default function HomePage() {
     return (
-        <main className="flex flex-col bg-dark">
+        <div className="flex flex-col w-full bg-dark">
             <Hero />
             <About />
             <ProjectGallery />
             <WorkOnSet />
             <Contact />
             <ScrollToTop />
-        </main>
+        </div>
     );
 }
