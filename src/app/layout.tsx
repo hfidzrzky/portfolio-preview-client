@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Navbar } from "@/components/shared/Navbar";
+import { Navbar } from "@/widgets/navbar";
+import { Footer } from "@/widgets/footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,15 +30,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased scroll-smooth`}
     >
       <body className="bg-[#0a0a0a] text-white selection:bg-white selection:text-black min-h-screen flex flex-col">
-        {/* Navbar diletakkan di sini agar muncul di Home, About, Project, dan Contact */}
         <Navbar />
         
-        {/* Main content akan mengisi sisa ruang */}
-        <main className="flex-grow">
+        <main className="grow">
           {children}
         </main>
 
-        {/* Anda bisa menambahkan Footer global di sini nantinya */}
+        <Footer />
       </body>
     </html>
   );
