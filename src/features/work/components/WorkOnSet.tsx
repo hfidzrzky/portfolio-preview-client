@@ -41,12 +41,14 @@ export const WorkOnSet = () => {
                             key={image.id} 
                             onClick={() => handleCardClick(image.id)}
                             style={{ 
-                                transitionDelay: `${index * 150}ms` 
+                                transitionDelay: `${index * 150}ms`,
+                                WebkitTapHighlightColor: "transparent"
                             }}
-                            className={`group relative w-full overflow-hidden bg-zinc-900 rounded-sm cursor-pointer break-inside-avoid shadow-lg mb-4 select-none transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            className={`group relative w-full overflow-hidden bg-dark rounded-sm cursor-pointer break-inside-avoid mb-4 select-none outline-none focus:outline-none focus:ring-0 active:outline-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                 isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-16 scale-95"
-                            } ${isActive ? "ring-1 ring-accent/50 shadow-accent/10" : "border border-white/5"}`}
+                            }`}
                         >
+                            {/* Image with hover and active states */}
                             {isStaticImport ? (
                                 <Image 
                                     src={image.src}
@@ -57,7 +59,7 @@ export const WorkOnSet = () => {
                                     className={`w-full h-auto object-cover select-none pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                         isActive
                                             ? "grayscale-0 scale-105"
-                                            : "grayscale group-hover:grayscale-0 group-hover:scale-105"
+                                            : "grayscale md:group-hover:grayscale-0 md:group-hover:scale-105"
                                     }`}
                                 />
                             ) : (
@@ -71,27 +73,20 @@ export const WorkOnSet = () => {
                                     className={`w-full h-auto object-cover select-none pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                         isActive
                                             ? "grayscale-0 scale-105"
-                                            : "grayscale group-hover:grayscale-0 group-hover:scale-105"
+                                            : "grayscale md:group-hover:grayscale-0 md:group-hover:scale-105"
                                     }`}
                                 />
                             )}
                             
-                            {/* Subtle Ambient Red Glow Overlay */}
-                            <div 
-                                className={`absolute inset-0 bg-accent/5 pointer-events-none transition-opacity duration-500 ${
-                                    isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                                }`} 
-                            />
-                            
                             {/* Caption & Dark Gradient Overlay */}
                             <div 
-                                className={`absolute inset-0 bg-linear-to-t from-dark/90 via-dark/20 to-transparent pointer-events-none transition-opacity duration-500 flex items-end p-5 ${
-                                    isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                className={`absolute inset-0 bg-linear-to-t from-dark/90 via-dark/20 to-transparent pointer-events-none transition-opacity duration-300 flex items-end p-5 ${
+                                    isActive ? "opacity-100" : "opacity-0 md:group-hover:opacity-100"
                                 }`}
                             >
                                 <p 
-                                    className={`text-[10px] md:text-xs text-primary uppercase tracking-[0.2em] transition-transform duration-500 ${
-                                        isActive ? "translate-y-0 text-white" : "translate-y-2 group-hover:translate-y-0"
+                                    className={`text-[10px] md:text-xs text-primary uppercase tracking-[0.2em] transition-transform duration-300 ${
+                                        isActive ? "translate-y-0 text-white" : "translate-y-2 md:group-hover:translate-y-0"
                                     }`}
                                 >
                                     {image.alt}
