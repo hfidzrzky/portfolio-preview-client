@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import { NAV_LINKS } from "../data/nav-links.data";
 import { useNavbar } from "../hooks/useNavbar";
 import { cn } from "@/shared/lib";
@@ -29,10 +30,20 @@ export const Navbar = () => {
                     {/* Brand Identifier */}
                     <Link
                         href="#home"
-                        className="group flex items-center gap-2 focus:outline-none"
+                        className="group flex items-center gap-2.5 focus:outline-none"
                         onClick={closeMenu}
                         aria-label="Ilham Hakim Portfolio - Home"
                     >
+                        <div className="relative w-7 h-3.5 md:w-8 md:h-4 shrink-0 transition-transform duration-300 group-hover:scale-105">
+                            <Image
+                                src="/icon-logo.png"
+                                alt="Ilham Hakim Logo Icon"
+                                fill
+                                sizes="32px"
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
                         <div className="flex items-baseline tracking-tighter text-lg md:text-xl font-bold">
                             <span className="text-white group-hover:text-zinc-200 transition-colors">ilham</span>
                             <span className="text-accent font-light italic ml-0.5 group-hover:translate-x-0.5 transition-transform duration-300">

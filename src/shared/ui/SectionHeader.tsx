@@ -48,10 +48,10 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
     if (align === "center") {
         return (
             <div className={cn("mb-12 md:mb-16 flex flex-col items-center text-center", className)}>
-                <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center gap-4 font-bold mb-6", badgeClassName)}>
-                    <span className="w-12 border-b border-accent drop-shadow-glow-red hidden md:block" />
+                <h2 className={cn("text-xs md:text-sm uppercase tracking-[0.4em] text-accent flex items-center justify-center gap-3 md:gap-4 font-bold mb-6", badgeClassName)}>
+                    <span className="w-8 md:w-12 border-b border-accent drop-shadow-glow-red" />
                     {badge}
-                    <span className="w-12 border-b border-accent drop-shadow-glow-red" />
+                    <span className="w-8 md:w-12 border-b border-accent drop-shadow-glow-red" />
                 </h2>
                 {title && (
                     <h3 className={cn("text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-primary mb-6", titleClassName)}>

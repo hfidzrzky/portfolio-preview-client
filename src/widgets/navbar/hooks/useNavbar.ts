@@ -22,22 +22,29 @@ export const useNavbar = () => {
     // Active section spy
     useEffect(() => {
         const handleSpy = () => {
-            const scrollPos = window.scrollY + 100;
+            const viewportThreshold = window.innerHeight * 0.35;
+            let currentSection = NAV_LINKS[0]?.id || "home";
+
             for (const link of NAV_LINKS) {
                 const el = document.getElementById(link.id);
                 if (el) {
-                    const top = el.offsetTop;
-                    const height = el.offsetHeight;
-                    if (scrollPos >= top && scrollPos < top + height) {
-                        setActiveSection(link.id);
-                        break;
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= viewportThreshold) {
+                        currentSection = link.id;
                     }
                 }
             }
+
+            setActiveSection(currentSection);
         };
 
+        handleSpy();
         window.addEventListener("scroll", handleSpy, { passive: true });
-        return () => window.removeEventListener("scroll", handleSpy);
+        window.addEventListener("resize", handleSpy, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", handleSpy);
+            window.removeEventListener("resize", handleSpy);
+        };
     }, []);
 
     // Prevent body scroll when menu is open
