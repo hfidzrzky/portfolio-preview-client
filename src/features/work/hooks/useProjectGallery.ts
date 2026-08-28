@@ -52,33 +52,15 @@ export const useProjectGallery = () => {
         });
     }, [updateScrollState]);
 
-    // Handle Mouse Wheel: Smooth horizontal conversion
     useEffect(() => {
         const el = scrollContainerRef.current;
         if (!el) return;
 
-        const handleWheel = (e: WheelEvent) => {
-            // Jika user scroll vertikal di atas gallery
-            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                const maxScroll = el.scrollWidth - el.clientWidth;
-                const isAtStart = el.scrollLeft <= 0 && e.deltaY < 0;
-                const isAtEnd = el.scrollLeft >= maxScroll - 1 && e.deltaY > 0;
-
-                // Jika belum mentok, konversi scroll wheel vertikal ke horizontal
-                if (!isAtStart && !isAtEnd) {
-                    e.preventDefault();
-                    el.scrollLeft += e.deltaY * 0.9;
-                }
-            }
-        };
-
-        el.addEventListener("wheel", handleWheel, { passive: false });
         el.addEventListener("scroll", onScroll, { passive: true });
         window.addEventListener("resize", updateScrollState);
         updateScrollState();
 
         return () => {
-            el.removeEventListener("wheel", handleWheel);
             el.removeEventListener("scroll", onScroll);
             window.removeEventListener("resize", updateScrollState);
             if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);

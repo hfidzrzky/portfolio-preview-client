@@ -1,14 +1,31 @@
 import type { StaticImageData } from "next/image";
 
+export type ProjectMediaType = "image" | "video";
+
+export interface ProjectMediaItem {
+    id: string;
+    type: ProjectMediaType;
+    src: string;
+    poster?: string;
+    alt?: string;
+}
+
 export interface Project {
     id: string;
     title: string;
     roles: string[];
-    thumbnail: string;
+    media: ProjectMediaItem[];
     description: string;
-    year: string;
-    category: string;
     url: string;
+    year?: string;
+}
+
+export interface ProjectRowSection {
+    id: string;
+    badge: string;
+    title: string;
+    subtitle?: string;
+    projects: Project[];
 }
 
 export interface WorkOnSetImage {
