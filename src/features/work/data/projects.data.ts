@@ -235,6 +235,18 @@ export const PROJECTS: Project[] = [
         description: "Final movement in cinematic composition blending nature with atmospheric lighting design.",
         url: "https://abcd",
     },
+    {
+        id: "19",
+        title: "Celestial Drift",
+        roles: ["Director of Photography", "Lighting Specialist"],
+        media: [
+            { id: "19-1", type: "video", src: "/selected-works/project-19/slide-1.mp4", alt: "Celestial Drift Shot 1" },
+            { id: "19-2", type: "video", src: "/selected-works/project-19/slide-2.mp4", alt: "Celestial Drift Shot 2" },
+            { id: "19-3", type: "video", src: "/selected-works/project-19/slide-3.mp4", alt: "Celestial Drift Shot 3" },
+        ],
+        description: "Atmospheric visual compositions exploring ambient low-light dynamics and fluid motion.",
+        url: "https://abcd",
+    },
 ];
 
 export const PROJECT_ROWS: ProjectRowSection[] = [
@@ -257,6 +269,7 @@ export const PROJECT_ROWS: ProjectRowSection[] = [
         badge: "Selected Works",
         title: "Stills & Documentary Frames",
         subtitle: "Photographic observations and captured cinematic stills",
-        projects: PROJECTS.slice(12, 18),
+        projects: PROJECTS.slice(12, 19),
     },
 ];
+
