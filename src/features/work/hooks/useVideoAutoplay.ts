@@ -47,12 +47,18 @@ export const useVideoAutoplay = ({
         };
     }, [threshold]);
 
-    // Safe Play/Pause Controller with Race Condition Safeguard (Always strictly muted)
+    // Safe Play/Pause Controller with Race Condition Safeguard & Replay Logic
     const safePlay = useCallback(() => {
         const video = videoRef.current;
         if (!video) return;
 
         video.muted = true;
+        video.loop = true;
+
+        // If video ended or reached the end, rewind to start
+        if (video.ended || (video.duration && video.currentTime >= video.duration - 0.1)) {
+            video.currentTime = 0;
+        }
 
         const promise = video.play();
         if (promise !== undefined) {
@@ -100,6 +106,10 @@ export const useVideoAutoplay = ({
     // Sync playback with isActive and isInView status
     useEffect(() => {
         if (isActive && isInView) {
+            const video = videoRef.current;
+            if (video && (video.ended || video.currentTime > 0)) {
+                video.currentTime = 0;
+            }
             safePlay();
         } else {
             safePause();
@@ -113,8 +123,19 @@ export const useVideoAutoplay = ({
     const handleLoadedData = useCallback(() => {
         if (isMountedRef.current) {
             setIsReady(true);
+            if (isActive && isInView) {
+                safePlay();
+            }
         }
-    }, []);
+    }, [isActive, isInView, safePlay]);
+
+    // Explicit onEnded handler to guarantee seamless looping across all browsers
+    const handleEnded = useCallback(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        video.currentTime = 0;
+        safePlay();
+    }, [safePlay]);
 
     return {
         videoRef,
@@ -123,5 +144,6 @@ export const useVideoAutoplay = ({
         isPlaying,
         isReady,
         handleLoadedData,
+        handleEnded,
     };
 };

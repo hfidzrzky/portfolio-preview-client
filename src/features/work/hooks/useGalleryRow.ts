@@ -72,7 +72,8 @@ export const useGalleryRow = () => {
         const el = scrollContainerRef.current;
         if (!el) return;
         const cardWidth = el.querySelector<HTMLElement>("[data-project-card]")?.offsetWidth || 400;
-        const step = direction === "left" ? -(cardWidth + 24) : (cardWidth + 24);
+        const gap = parseFloat(window.getComputedStyle(el).columnGap || window.getComputedStyle(el).gap) || 32;
+        const step = direction === "left" ? -(cardWidth + gap) : (cardWidth + gap);
         el.scrollBy({ left: step, behavior: "smooth" });
     }, []);
 

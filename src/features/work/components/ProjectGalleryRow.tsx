@@ -85,12 +85,12 @@ export const ProjectGalleryRow = memo(({ row }: ProjectGalleryRowProps) => {
             <div className="relative w-full">
                 {/* Visual Edge Gradient Mask */}
                 <div
-                    className={`pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-linear-to-r from-dark to-transparent z-10 transition-opacity duration-300 ${
+                    className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 md:w-24 bg-linear-to-r from-dark to-transparent z-10 transition-opacity duration-300 hidden md:block ${
                         canScrollLeft ? "opacity-100" : "opacity-0"
                     }`}
                 />
                 <div
-                    className={`pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-linear-to-l from-dark to-transparent z-10 transition-opacity duration-300 ${
+                    className={`pointer-events-none absolute right-0 top-0 bottom-0 w-8 md:w-24 bg-linear-to-l from-dark to-transparent z-10 transition-opacity duration-300 hidden md:block ${
                         canScrollRight ? "opacity-100" : "opacity-0"
                     }`}
                 />
@@ -104,7 +104,7 @@ export const ProjectGalleryRow = memo(({ row }: ProjectGalleryRowProps) => {
                     onMouseLeave={handleMouseUpOrLeave}
                     onClickCapture={handleClickCapture}
                     onDragStart={(e) => e.preventDefault()}
-                    className={`flex gap-6 md:gap-8 overflow-x-auto scrollbar-none select-none pb-6 transition-opacity duration-1000 will-change-scroll ${
+                    className={`-mx-6 px-6 md:mx-0 md:px-0 flex gap-4 md:gap-8 overflow-x-auto scrollbar-none select-none pb-6 transition-opacity duration-1000 will-change-scroll ${
                         isDragging
                             ? "md:cursor-grabbing scroll-auto snap-none"
                             : "md:cursor-grab scroll-smooth snap-x snap-mandatory"
@@ -115,7 +115,7 @@ export const ProjectGalleryRow = memo(({ row }: ProjectGalleryRowProps) => {
                         <div
                             key={project.id}
                             data-project-card
-                            className="w-70 sm:w-90 md:w-95 lg:w-100 flex-none snap-start group"
+                            className="w-[82vw] max-w-[340px] sm:w-90 md:w-95 lg:w-100 flex-none snap-center md:snap-start group"
                         >
                             <ProjectCard project={project} />
                         </div>

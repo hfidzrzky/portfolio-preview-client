@@ -30,6 +30,7 @@ const VideoPlayer = memo(({
         isInView,
         isReady,
         handleLoadedData,
+        handleEnded,
     } = useVideoAutoplay({ isActive });
 
     const activeFitMode = item.fitMode || fitMode;
@@ -78,6 +79,7 @@ const VideoPlayer = memo(({
                     loop
                     preload="metadata"
                     onLoadedData={handleLoadedData}
+                    onEnded={handleEnded}
                     className={`relative z-10 w-full h-full transition-opacity duration-700 select-none pointer-events-none ${
                         isContain ? "object-contain" : "object-cover"
                     } ${isReady ? "opacity-100" : "opacity-0"}`}
