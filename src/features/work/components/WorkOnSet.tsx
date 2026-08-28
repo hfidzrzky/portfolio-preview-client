@@ -41,7 +41,7 @@ export const WorkOnSet = () => {
                             key={image.id} 
                             onClick={() => handleCardClick(image.id)}
                             style={{ 
-                                transitionDelay: `${index * 150}ms`,
+                                transitionDelay: `${index * 120}ms`,
                                 WebkitTapHighlightColor: "transparent"
                             }}
                             className={`group relative w-full overflow-hidden bg-dark rounded-sm cursor-pointer break-inside-avoid mb-4 select-none outline-none focus:outline-none focus:ring-0 active:outline-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${

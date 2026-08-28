@@ -13,6 +13,8 @@ export const PROJECTS: Project[] = [
         ],
         description: "A deep dive into lighting precision and dark mood cinematic storytelling.",
         url: "https://abcd",
+        fitMode: "contain",
+        ambientBackdrop: true,
     },
     {
         id: "2",
@@ -145,6 +147,8 @@ export const PROJECTS: Project[] = [
         ],
         description: "Deep shadow falloffs and precise chiaroscuro illumination technique.",
         url: "https://abcd",
+        fitMode: "contain",
+        ambientBackdrop: true,
     },
 
     // --- ROW 3 (13 - 18): Stills & Cinematic Frames ---

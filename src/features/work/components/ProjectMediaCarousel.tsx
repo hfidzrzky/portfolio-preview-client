@@ -1,18 +1,32 @@
 "use client";
 
 import React, { memo } from "react";
-import type { ProjectMediaItem } from "../types";
+import type { ProjectMediaItem, MediaAspectRatio, MediaFitMode } from "../types";
 import { useProjectCarousel } from "../hooks/useProjectCarousel";
 import { ProjectMediaSlide } from "./media/ProjectMediaSlide";
 
 interface ProjectMediaCarouselProps {
     media: ProjectMediaItem[];
     title: string;
+    aspectRatio?: MediaAspectRatio;
+    fitMode?: MediaFitMode;
+    ambientBackdrop?: boolean;
 }
+
+const ASPECT_RATIO_CLASSES: Record<MediaAspectRatio, string> = {
+    "16/9": "aspect-video",
+    "4/5": "aspect-[4/5]",
+    "9/16": "aspect-[9/16]",
+    "1/1": "aspect-square",
+    "21/9": "aspect-[21/9]",
+};
 
 export const ProjectMediaCarousel = memo(({
     media,
     title,
+    aspectRatio = "16/9",
+    fitMode = "contain",
+    ambientBackdrop = true,
 }: ProjectMediaCarouselProps) => {
     const {
         activeIndex,
@@ -30,10 +44,14 @@ export const ProjectMediaCarousel = memo(({
     } = useProjectCarousel({ totalItems: media.length });
 
     const hasMultipleSlides = media.length > 1;
+    const ratioClass = ASPECT_RATIO_CLASSES[aspectRatio] || "aspect-video";
 
     return (
         <div
-            className={`relative w-full aspect-video bg-zinc-900 rounded-sm overflow-hidden border border-white/5 group-hover:border-accent/30 transition-colors duration-500 touch-pan-y select-none ${
+            role="region"
+            aria-roledescription="carousel"
+            aria-label={`${title} media showcase`}
+            className={`relative w-full ${ratioClass} bg-zinc-900 rounded-sm overflow-hidden border border-white/5 group-hover:border-accent/30 transition-colors duration-500 touch-pan-y select-none ${
                 hasMultipleSlides
                     ? isDraggingMouse
                         ? "cursor-grabbing"
@@ -56,6 +74,9 @@ export const ProjectMediaCarousel = memo(({
                     return (
                         <div
                             key={item.id || index}
+                            role="group"
+                            aria-roledescription="slide"
+                            aria-label={`${title} slide ${index + 1} of ${media.length}`}
                             className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
                                 isActive
                                     ? "opacity-100 z-10"
@@ -66,6 +87,8 @@ export const ProjectMediaCarousel = memo(({
                                 item={item}
                                 isActive={isActive}
                                 priority={index === 0}
+                                fitMode={fitMode}
+                                ambientBackdrop={ambientBackdrop}
                             />
                         </div>
                     );
@@ -81,7 +104,7 @@ export const ProjectMediaCarousel = memo(({
                     <button
                         type="button"
                         onClick={goToPrev}
-                        aria-label="Previous slide"
+                        aria-label={`Previous slide for ${title}`}
                         className="hidden md:flex absolute left-2.5 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-dark/70 hover:bg-dark/95 border border-white/10 hover:border-accent/40 text-primary hover:text-accent items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm cursor-pointer shadow-lg"
                     >
                         <span className="text-xs">&#10094;</span>
@@ -89,7 +112,7 @@ export const ProjectMediaCarousel = memo(({
                     <button
                         type="button"
                         onClick={goToNext}
-                        aria-label="Next slide"
+                        aria-label={`Next slide for ${title}`}
                         className="hidden md:flex absolute right-2.5 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-dark/70 hover:bg-dark/95 border border-white/10 hover:border-accent/40 text-primary hover:text-accent items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm cursor-pointer shadow-lg"
                     >
                         <span className="text-xs">&#10095;</span>
@@ -105,7 +128,7 @@ export const ProjectMediaCarousel = memo(({
                             key={item.id || idx}
                             type="button"
                             onClick={(e) => goToIndex(idx, e)}
-                            aria-label={`Go to slide ${idx + 1} of ${media.length}`}
+                            aria-label={`Go to slide ${idx + 1} of ${media.length} for ${title}`}
                             className="p-0.5 cursor-pointer focus:outline-hidden"
                         >
                             <span

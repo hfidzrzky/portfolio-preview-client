@@ -11,7 +11,13 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
     return (
         <div className="group flex flex-col gap-4 select-none w-full">
             {/* Visual Exploration Area: Multi-Slide Media Carousel */}
-            <ProjectMediaCarousel media={project.media} title={project.title} />
+            <ProjectMediaCarousel
+                media={project.media}
+                title={project.title}
+                aspectRatio={project.aspectRatio}
+                fitMode={project.fitMode}
+                ambientBackdrop={project.ambientBackdrop}
+            />
 
             {/* Information & Narrative Metadata */}
             <div className="flex flex-col px-0.5">

@@ -87,4 +87,3 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
         </div>
     );
 };
-
