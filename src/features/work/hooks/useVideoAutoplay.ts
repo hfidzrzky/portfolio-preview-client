@@ -17,7 +17,8 @@ export const useVideoAutoplay = ({
     const [isPlaying, setIsPlaying] = useState(false);
     const [isReady, setIsReady] = useState(false);
 
-    // Ref to track play promise and prevent unhandled AbortError race conditions
+    // Strict state refs to prevent async race condition during fast scrolling
+    const shouldPlayRef = useRef(false);
     const playPromiseRef = useRef<Promise<void> | null>(null);
     const isMountedRef = useRef(true);
 
@@ -47,15 +48,16 @@ export const useVideoAutoplay = ({
         };
     }, [threshold]);
 
-    // Safe Play/Pause Controller with Race Condition Safeguard & Replay Logic
+    // Safe Play Controller with Intended State Verification
     const safePlay = useCallback(() => {
+        shouldPlayRef.current = true;
         const video = videoRef.current;
         if (!video) return;
 
         video.muted = true;
         video.loop = true;
 
-        // If video ended or reached the end, rewind to start
+        // If video ended or reached near the end, rewind
         if (video.ended || (video.duration && video.currentTime >= video.duration - 0.1)) {
             video.currentTime = 0;
         }
@@ -65,12 +67,24 @@ export const useVideoAutoplay = ({
             playPromiseRef.current = promise;
             promise
                 .then(() => {
-                    if (isMountedRef.current) {
-                        setIsPlaying(true);
+                    // Critical: Verify if user scrolled away while the promise was resolving
+                    if (!shouldPlayRef.current) {
+                        video.pause();
+                        if (isMountedRef.current) setIsPlaying(false);
+                    } else {
+                        if (isMountedRef.current) setIsPlaying(true);
                     }
                 })
                 .catch((error: unknown) => {
                     if (error instanceof Error && error.name === "AbortError") {
+                        // If interrupted by rapid scroll, but user is currently back on this video, retry play
+                        if (shouldPlayRef.current && isMountedRef.current) {
+                            setTimeout(() => {
+                                if (shouldPlayRef.current) {
+                                    video.play().catch(() => {});
+                                }
+                            }, 50);
+                        }
                         return;
                     }
                     if (isMountedRef.current) {
@@ -80,20 +94,30 @@ export const useVideoAutoplay = ({
         }
     }, []);
 
+    // Safe Pause Controller preventing stale callback interruptions
     const safePause = useCallback(() => {
+        shouldPlayRef.current = false;
         const video = videoRef.current;
         if (!video) return;
 
         if (playPromiseRef.current !== null) {
             playPromiseRef.current
                 .then(() => {
-                    video.pause();
-                    if (isMountedRef.current) {
-                        setIsPlaying(false);
+                    // Only pause if user STILL wants it paused (not rapidly returned)
+                    if (!shouldPlayRef.current) {
+                        video.pause();
+                        if (isMountedRef.current) {
+                            setIsPlaying(false);
+                        }
                     }
                 })
                 .catch(() => {
-                    // Swallowed safely
+                    if (!shouldPlayRef.current) {
+                        video.pause();
+                        if (isMountedRef.current) {
+                            setIsPlaying(false);
+                        }
+                    }
                 });
         } else {
             video.pause();
@@ -103,19 +127,22 @@ export const useVideoAutoplay = ({
         }
     }, []);
 
-    // Sync playback with isActive and isInView status
+    // Sync playback state with active slide & viewport visibility
     useEffect(() => {
         if (isActive && isInView) {
+            shouldPlayRef.current = true;
             const video = videoRef.current;
             if (video && (video.ended || video.currentTime > 0)) {
                 video.currentTime = 0;
             }
             safePlay();
         } else {
+            shouldPlayRef.current = false;
             safePause();
         }
 
         return () => {
+            shouldPlayRef.current = false;
             safePause();
         };
     }, [isActive, isInView, safePlay, safePause]);
@@ -123,18 +150,20 @@ export const useVideoAutoplay = ({
     const handleLoadedData = useCallback(() => {
         if (isMountedRef.current) {
             setIsReady(true);
-            if (isActive && isInView) {
+            if (isActive && isInView && shouldPlayRef.current) {
                 safePlay();
             }
         }
     }, [isActive, isInView, safePlay]);
 
-    // Explicit onEnded handler to guarantee seamless looping across all browsers
+    // Explicit onEnded handler for continuous seamless loop
     const handleEnded = useCallback(() => {
         const video = videoRef.current;
         if (!video) return;
         video.currentTime = 0;
-        safePlay();
+        if (shouldPlayRef.current) {
+            safePlay();
+        }
     }, [safePlay]);
 
     return {

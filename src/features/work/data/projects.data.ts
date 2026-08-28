@@ -240,21 +240,21 @@ export const PROJECTS: Project[] = [
 export const PROJECT_ROWS: ProjectRowSection[] = [
     {
         id: "row-1",
-        badge: "Selected Works / Vol. 01",
+        badge: "Selected Works",
         title: "Commercial & Narrative Films",
-        subtitle: "Cinematic storycraft and narrative productions",
+        subtitle: "Featured Commercial & Narrative Films",
         projects: PROJECTS.slice(0, 6),
     },
     {
         id: "row-2",
-        badge: "Selected Works / Vol. 02",
+        badge: "Selected Works",
         title: "Motion & Visual Experiments",
         subtitle: "Atmospheric music videos and lighting experiments",
         projects: PROJECTS.slice(6, 12),
     },
     {
         id: "row-3",
-        badge: "Selected Works / Vol. 03",
+        badge: "Selected Works",
         title: "Stills & Documentary Frames",
         subtitle: "Photographic observations and captured cinematic stills",
         projects: PROJECTS.slice(12, 18),
