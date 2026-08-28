@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     siteName: "Muhammad Ilham Hakim Portfolio",
     images: [
       {
-        url: "/images/profile-ilham.jpeg",
+        url: "/images/profile-ilham.webp",
         width: 1200,
         height: 630,
         alt: "Muhammad Ilham Hakim - Director of Photography",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     title: "Muhammad Ilham Hakim | Director of Photography & Filmmaker",
     description:
       "Official portfolio of Muhammad Ilham Hakim, a Director of Photography and Visual Storyteller based in Bandung.",
-    images: ["/images/profile-ilham.jpeg"],
+    images: ["/images/profile-ilham.webp"],
   },
   robots: {
     index: true,
@@ -91,7 +91,7 @@ const jsonLd = {
       jobTitle: "Director of Photography",
       description:
         "Director of Photography and Filmmaker based in Bandung, specializing in cinematic storytelling, lighting, and camera work.",
-      image: "https://ilhamhakim-portfolio.vercel.app/images/profile-ilham.jpeg",
+      image: "https://ilhamhakim-portfolio.vercel.app/images/profile-ilham.webp",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Bandung",

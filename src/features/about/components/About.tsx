@@ -39,7 +39,7 @@ export const About = () => {
                         />
 
                         <Image
-                            src="/images/profile-ilham.jpeg"
+                            src="/images/profile-ilham.webp"
                             alt="Ilham Hakim - Cinematic Specialist"
                             fill
                             draggable={false}

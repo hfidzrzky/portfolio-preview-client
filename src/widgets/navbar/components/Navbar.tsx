@@ -36,7 +36,7 @@ export const Navbar = () => {
                     >
                         <div className="relative w-7 h-3.5 md:w-8 md:h-4 shrink-0 transition-transform duration-300 group-hover:scale-105">
                             <Image
-                                src="/icon-logo.png"
+                                src="/icon-logo.webp"
                                 alt="Ilham Hakim Logo Icon"
                                 fill
                                 sizes="32px"

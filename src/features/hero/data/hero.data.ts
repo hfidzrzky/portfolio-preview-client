@@ -5,5 +5,5 @@ export const HERO_DATA: HeroData = {
     headingLine1: "Exploring The",
     headingHighlight: "Visual Soul",
     authorName: "Muhammad Ilham Hakim",
-    bgImage: "/images/hero-bg.png",
+    bgImage: "/images/hero-bg.webp",
 };
