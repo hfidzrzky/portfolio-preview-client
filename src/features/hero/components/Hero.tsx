@@ -12,21 +12,17 @@ export const Hero = () => {
     return (
         <section id="home" className="relative min-h-screen flex flex-col justify-center items-center px-6 text-center overflow-hidden bg-[#0a0a0a]">
             {/* Background Layer */}
-            <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.4 }}
-                transition={{ duration: 2 }}
-                className="absolute inset-0 z-0"
-            >
+            <div className="absolute inset-0 z-0 opacity-40">
                 <Image 
                     src={HERO_DATA.bgImage} 
-                    alt="Cinematic" 
+                    alt="Cinematic Background" 
                     fill 
                     priority 
+                    sizes="100vw"
                     className="object-cover" 
                 />
                 <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent via-70% to-[#0a0a0a]" />
-            </motion.div>
+            </div>
 
             {/* Content Layer */}
             <motion.div 

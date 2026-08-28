@@ -27,7 +27,7 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
         onTouchEnd,
     } = useArchivedMarquee({ direction, speed });
 
-    const repeatedItems = useMemo(() => Array.from({ length: 10 }).flatMap(() => items), [items]);
+    const repeatedItems = useMemo(() => Array.from({ length: 3 }).flatMap(() => items), [items]);
 
     return (
         <div
@@ -55,6 +55,7 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
                                 src={item.src}
                                 alt={item.alt || "Archived Frame"}
                                 fill
+                                loading="lazy"
                                 draggable={false}
                                 sizes="(max-width: 768px) 160px, (max-width: 1024px) 224px, 288px"
                                 className="object-cover opacity-60 hover:opacity-100 transition-all duration-700 pointer-events-none select-none"
@@ -74,6 +75,7 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
                                 src={item.src}
                                 alt={item.alt || "Archived Frame"}
                                 fill
+                                loading="lazy"
                                 draggable={false}
                                 sizes="(max-width: 768px) 160px, (max-width: 1024px) 224px, 288px"
                                 className="object-cover opacity-60 hover:opacity-100 transition-all duration-700 pointer-events-none select-none"
