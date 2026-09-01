@@ -34,10 +34,17 @@ export interface ProjectRowSection {
     projects: Project[];
 }
 
+export type WorkOnSetCategory = 'all' | 'directing' | 'gear' | 'lighting' | 'candid' | 'project';
+
 export interface WorkOnSetImage {
-    id: number | string;
-    src: string | StaticImageData;
+    id: string;
+    src: string;
     alt: string;
+    category: Exclude<WorkOnSetCategory, 'all'>;
+    aspectRatio: 'portrait' | 'landscape' | 'vertical' | 'square';
+    tag: string;
+    caption?: string;
+    featured?: boolean;
     width?: number;
     height?: number;
 }
