@@ -110,7 +110,7 @@ export const ProjectGalleryRow = memo(({ row }: ProjectGalleryRowProps) => {
                         <div
                             key={project.id}
                             data-project-card
-                            className="w-[82vw] max-w-85 sm:w-90 md:w-95 lg:w-100 flex-none snap-center md:snap-start group"
+                            className="w-[82vw] max-w-85 sm:w-90 md:w-95 lg:w-100 flex-none snap-center md:snap-start group flex flex-col"
                         >
                             <ProjectCard project={project} />
                         </div>

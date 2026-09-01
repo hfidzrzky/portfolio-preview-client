@@ -65,17 +65,10 @@ export const WorkOnSet = () => {
                                 onClick={() => handleCategorySelect(cat.id)}
                                 className={`relative group shrink-0 px-3.5 md:px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-300 cursor-pointer select-none flex items-center gap-2 border ${
                                     isActive
-                                        ? "text-white border-accent/60 shadow-[0_0_20px_rgba(225,29,72,0.25)]"
-                                        : "text-support/70 border-white/5 hover:border-white/20 hover:text-white bg-dark/40"
+                                        ? "text-white border-accent bg-transparent"
+                                        : "text-support/70 border-white/10 hover:border-white/25 hover:text-white bg-transparent"
                                 }`}
                             >
-                                {isActive && (
-                                    <motion.span
-                                        layoutId="activeCategoryBg"
-                                        className="absolute inset-0 rounded-full bg-accent/20 -z-10"
-                                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                                    />
-                                )}
                                 <span>{cat.label}</span>
                                 <span 
                                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono transition-colors ${
@@ -156,7 +149,7 @@ export const WorkOnSet = () => {
                     >
                         <button
                             onClick={handleToggleExpand}
-                            className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-full text-xs uppercase tracking-[0.25em] font-semibold text-primary bg-dark/90 border border-white/15 hover:border-accent hover:shadow-[0_0_25px_rgba(225,29,72,0.3)] transition-all duration-300 cursor-pointer select-none active:scale-95"
+                            className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-full text-xs uppercase tracking-[0.25em] font-semibold text-primary bg-dark/90 border border-white/15 hover:border-accent transition-all duration-300 cursor-pointer select-none active:scale-95"
                         >
                             <Layers className="w-4 h-4 text-accent transition-transform duration-300 group-hover:rotate-12" />
                             <span>

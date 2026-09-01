@@ -9,7 +9,7 @@ export interface ProjectCardProps {
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
     return (
-        <div className="group flex flex-col gap-4 select-none w-full">
+        <div className="group flex flex-col justify-between h-full gap-4 select-none w-full">
             {/* Visual Exploration Area: Multi-Slide Media Carousel */}
             <ProjectMediaCarousel
                 media={project.media}
@@ -20,27 +20,29 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             />
 
             {/* Information & Narrative Metadata */}
-            <div className="flex flex-col px-0.5">
-                {/* 1. Title (Clean Full-Width Editorial Display) */}
-                <h3 className="text-base md:text-lg font-medium text-primary uppercase tracking-widest truncate group-hover:text-accent transition-colors duration-300">
-                    {project.title}
-                </h3>
+            <div className="flex flex-col flex-1 justify-between px-0.5">
+                <div className="flex flex-col gap-2">
+                    {/* 1. Title (Clean Full-Width Multi-Line Wrapping Display) */}
+                    <h3 className="text-base md:text-lg font-medium text-primary uppercase tracking-wider leading-snug wrap-break-words text-balance group-hover:text-accent transition-colors duration-300">
+                        {project.title}
+                    </h3>
 
-                {/* 2. Role Underneath Title */}
-                {project.roles && project.roles.length > 0 && (
-                    <p className="text-[10px] md:text-xs text-accent uppercase tracking-[0.25em] font-medium mt-1 truncate">
-                        {project.roles.join(" • ")}
-                    </p>
-                )}
+                    {/* 2. Minimalist Role Badges */}
+                    {project.roles && project.roles.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-0.5">
+                            {project.roles.map((role, idx) => (
+                                <span
+                                    key={`${project.id}-role-${idx}`}
+                                    className="inline-flex items-center px-2 py-0.5 text-[10px] md:text-xs font-mono uppercase tracking-wider text-support/90 bg-white/5 border border-white/10 rounded-xs transition-colors duration-300 group-hover:border-accent/40 group-hover:text-primary"
+                                >
+                                    {role}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
 
-                {/* 3. Description: High-Legibility Narrative Body */}
-                {project.description && (
-                    <p className="mt-2.5 text-xs md:text-sm font-light text-support/60 leading-relaxed line-clamp-2 group-hover:text-support/85 transition-colors duration-300">
-                        {project.description}
-                    </p>
-                )}
-
-                {/* 4. Dedicated Action CTA */}
+                {/* 3. Dedicated Action CTA */}
                 <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
                     <Link
                         href={project.url}

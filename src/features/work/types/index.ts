@@ -19,7 +19,7 @@ export interface Project {
     title: string;
     roles: string[];
     media: ProjectMediaItem[];
-    description: string;
+    description?: string;
     url: string;
     year?: string;
     aspectRatio?: MediaAspectRatio;
