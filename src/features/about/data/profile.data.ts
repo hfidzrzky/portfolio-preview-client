@@ -5,7 +5,7 @@ export const CLIENT_PROFILE: ClientProfile = {
     nickname: "Ilham",
     origin: "Bandung City",
     education: "Institut Art and Culture Bandung (ISBI)",
-    major: "Film and Television",
+    major: "Creative",
     roles: [
         "Director of Photography",
         "Camera Person",

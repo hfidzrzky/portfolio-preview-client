@@ -31,7 +31,6 @@ export interface ProjectRowSection {
     id: string;
     badge: string;
     title: string;
-    subtitle?: string;
     projects: Project[];
 }
 

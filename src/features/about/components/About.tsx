@@ -95,7 +95,7 @@ export const About = () => {
                             A <span className="text-primary font-medium">{CLIENT_PROFILE.major}</span> specialist
                             from <span className="text-primary font-medium">{CLIENT_PROFILE.origin}</span>.
                             <br className="hidden lg:block" />
-                            Focusing on cinematic storytelling through light and frames.
+                             Focusing on cinematic storytelling through light and frames.
                         </p>
                     </motion.div>
 

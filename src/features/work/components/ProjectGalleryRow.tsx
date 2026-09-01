@@ -25,7 +25,7 @@ export const ProjectGalleryRow = memo(({ row }: ProjectGalleryRowProps) => {
         handleClickCapture,
     } = useGalleryRow();
 
-    const { badge, title, subtitle, projects } = row;
+    const { badge, title, projects } = row;
 
     return (
         <div ref={rowRef} className="max-w-7xl mx-auto w-full px-6 md:px-16 flex flex-col">
@@ -40,11 +40,6 @@ export const ProjectGalleryRow = memo(({ row }: ProjectGalleryRowProps) => {
                         <span className="w-10 md:w-12 border-b border-accent drop-shadow-glow-red" />
                         {badge || title}
                     </h2>
-                    {subtitle && (
-                        <p className="mt-2 text-[10px] md:text-xs text-support/60 tracking-[0.2em] uppercase font-light">
-                            {subtitle}
-                        </p>
-                    )}
                 </div>
 
                 {/* Navigation Buttons & Total Counter */}
@@ -115,7 +110,7 @@ export const ProjectGalleryRow = memo(({ row }: ProjectGalleryRowProps) => {
                         <div
                             key={project.id}
                             data-project-card
-                            className="w-[82vw] max-w-[340px] sm:w-90 md:w-95 lg:w-100 flex-none snap-center md:snap-start group"
+                            className="w-[82vw] max-w-85 sm:w-90 md:w-95 lg:w-100 flex-none snap-center md:snap-start group"
                         >
                             <ProjectCard project={project} />
                         </div>
