@@ -3,6 +3,7 @@ import type { StaticImageData } from "next/image";
 export type ProjectMediaType = "image" | "video";
 export type MediaAspectRatio = "16/9" | "4/5" | "9/16" | "1/1" | "21/9";
 export type MediaFitMode = "contain" | "cover";
+export type MediaRotation = 90 | -90 | 180 | 270;
 
 export interface ProjectMediaItem {
     id: string;
@@ -12,6 +13,7 @@ export interface ProjectMediaItem {
     alt?: string;
     aspectRatio?: MediaAspectRatio;
     fitMode?: MediaFitMode;
+    rotate?: MediaRotation;
 }
 
 export interface Project {
@@ -24,6 +26,7 @@ export interface Project {
     year?: string;
     aspectRatio?: MediaAspectRatio;
     fitMode?: MediaFitMode;
+    rotate?: MediaRotation;
     ambientBackdrop?: boolean;
 }
 

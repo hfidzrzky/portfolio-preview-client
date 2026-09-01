@@ -2,7 +2,7 @@
 
 import React, { memo } from "react";
 import Image from "next/image";
-import type { ProjectMediaItem, MediaFitMode } from "../../types";
+import type { ProjectMediaItem, MediaFitMode, MediaRotation } from "../../types";
 import { useVideoAutoplay } from "../../hooks/useVideoAutoplay";
 
 interface ProjectMediaSlideProps {
@@ -10,18 +10,34 @@ interface ProjectMediaSlideProps {
     isActive: boolean;
     priority?: boolean;
     fitMode?: MediaFitMode;
+    rotate?: MediaRotation;
     ambientBackdrop?: boolean;
 }
+
+const getMediaTransformClass = (isContain: boolean, rotate?: MediaRotation) => {
+    if (rotate === -90 || rotate === 270) {
+        return "-rotate-90 w-[56.25%] h-[177.78%] max-w-none object-cover";
+    }
+    if (rotate === 90) {
+        return "rotate-90 w-[56.25%] h-[177.78%] max-w-none object-cover";
+    }
+    if (rotate === 180) {
+        return "rotate-180 w-full h-full " + (isContain ? "object-contain" : "object-cover");
+    }
+    return `w-full h-full ${isContain ? "object-contain" : "object-cover"}`;
+};
 
 const VideoPlayer = memo(({
     item,
     isActive,
     fitMode = "contain",
+    rotate,
     ambientBackdrop = true,
 }: {
     item: ProjectMediaItem;
     isActive: boolean;
     fitMode?: MediaFitMode;
+    rotate?: MediaRotation;
     ambientBackdrop?: boolean;
 }) => {
     const {
@@ -34,12 +50,14 @@ const VideoPlayer = memo(({
     } = useVideoAutoplay({ isActive });
 
     const activeFitMode = item.fitMode || fitMode;
+    const activeRotate = item.rotate ?? rotate;
     const isContain = activeFitMode === "contain";
+    const mediaClass = getMediaTransformClass(isContain, activeRotate);
 
     return (
         <div ref={containerRef} className="relative w-full h-full bg-zinc-950 overflow-hidden flex items-center justify-center">
             {/* Ambient Frosted Glow Backdrop for non-covering aspect ratios */}
-            {ambientBackdrop && isContain && (
+            {ambientBackdrop && isContain && !activeRotate && (
                 <div className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-40 blur-2xl scale-125 transition-opacity duration-1000">
                     {item.poster ? (
                         <Image
@@ -62,9 +80,7 @@ const VideoPlayer = memo(({
                     alt={item.alt || "Video preview"}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className={`relative z-10 transition-opacity duration-700 select-none pointer-events-none ${
-                        isContain ? "object-contain" : "object-cover"
-                    }`}
+                    className={`relative z-10 transition-opacity duration-700 select-none pointer-events-none ${mediaClass}`}
                 />
             )}
 
@@ -80,9 +96,9 @@ const VideoPlayer = memo(({
                     preload="metadata"
                     onLoadedData={handleLoadedData}
                     onEnded={handleEnded}
-                    className={`relative z-10 w-full h-full transition-opacity duration-700 select-none pointer-events-none ${
-                        isContain ? "object-contain" : "object-cover"
-                    } ${isReady ? "opacity-100" : "opacity-0"}`}
+                    className={`relative z-10 transition-opacity duration-700 select-none pointer-events-none ${mediaClass} ${
+                        isReady ? "opacity-100" : "opacity-0"
+                    }`}
                 />
             )}
         </div>
@@ -96,10 +112,13 @@ export const ProjectMediaSlide = memo(({
     isActive,
     priority = false,
     fitMode = "contain",
+    rotate,
     ambientBackdrop = true,
 }: ProjectMediaSlideProps) => {
     const activeFitMode = item.fitMode || fitMode;
+    const activeRotate = item.rotate ?? rotate;
     const isContain = activeFitMode === "contain";
+    const mediaClass = getMediaTransformClass(isContain, activeRotate);
 
     if (item.type === "video") {
         return (
@@ -107,6 +126,7 @@ export const ProjectMediaSlide = memo(({
                 item={item}
                 isActive={isActive}
                 fitMode={fitMode}
+                rotate={rotate}
                 ambientBackdrop={ambientBackdrop}
             />
         );
@@ -115,7 +135,7 @@ export const ProjectMediaSlide = memo(({
     return (
         <div className="relative w-full h-full bg-zinc-950 overflow-hidden flex items-center justify-center">
             {/* Ambient Frosted Glow Backdrop for Stills / Images */}
-            {ambientBackdrop && isContain && (
+            {ambientBackdrop && isContain && !activeRotate && (
                 <div className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-30 blur-2xl scale-125 transition-opacity duration-1000">
                     <Image
                         src={item.src}
@@ -133,9 +153,7 @@ export const ProjectMediaSlide = memo(({
                 fill
                 priority={priority}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className={`relative z-10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] select-none pointer-events-none ${
-                    isContain ? "object-contain" : "object-cover"
-                }`}
+                className={`relative z-10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] select-none pointer-events-none ${mediaClass}`}
             />
         </div>
     );

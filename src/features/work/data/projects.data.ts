@@ -71,7 +71,7 @@ export const PROJECTS: Project[] = [
     {
         id: "7",
         title: "Company Profile ITB 1920",
-        roles: ["Assistant Camera"],
+        roles: ["Camera Operator", "Assistant Camera"],
         media: [
             { id: "7-1", type: "video", src: "/selected-works/project-7/slide-1.mp4", alt: "Company Profile ITB 1920 Shot 1" },
         ],
@@ -135,8 +135,7 @@ export const PROJECTS: Project[] = [
             { id: "12-2", type: "video", src: "/selected-works/project-12/slide-2.mp4", alt: "Campaign Urban Exchange Shot 2" },
         ],
         url: "https://abcd",
-        fitMode: "contain",
-        ambientBackdrop: true,
+        rotate: -90,
     },
 
     // --- ROW 3 (13 - 19): Volume 03: Stills & Documentary Frames ---

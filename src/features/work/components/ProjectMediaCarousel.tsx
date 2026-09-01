@@ -1,7 +1,7 @@
 "use client";
 
 import React, { memo } from "react";
-import type { ProjectMediaItem, MediaAspectRatio, MediaFitMode } from "../types";
+import type { ProjectMediaItem, MediaAspectRatio, MediaFitMode, MediaRotation } from "../types";
 import { useProjectCarousel } from "../hooks/useProjectCarousel";
 import { ProjectMediaSlide } from "./media/ProjectMediaSlide";
 
@@ -10,6 +10,7 @@ interface ProjectMediaCarouselProps {
     title: string;
     aspectRatio?: MediaAspectRatio;
     fitMode?: MediaFitMode;
+    rotate?: MediaRotation;
     ambientBackdrop?: boolean;
 }
 
@@ -26,6 +27,7 @@ export const ProjectMediaCarousel = memo(({
     title,
     aspectRatio = "16/9",
     fitMode = "contain",
+    rotate,
     ambientBackdrop = true,
 }: ProjectMediaCarouselProps) => {
     const {
@@ -88,6 +90,7 @@ export const ProjectMediaCarousel = memo(({
                                 isActive={isActive}
                                 priority={index === 0}
                                 fitMode={fitMode}
+                                rotate={rotate}
                                 ambientBackdrop={ambientBackdrop}
                             />
                         </div>

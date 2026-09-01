@@ -16,6 +16,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 title={project.title}
                 aspectRatio={project.aspectRatio}
                 fitMode={project.fitMode}
+                rotate={project.rotate}
                 ambientBackdrop={project.ambientBackdrop}
             />
 
