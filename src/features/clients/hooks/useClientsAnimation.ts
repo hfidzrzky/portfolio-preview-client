@@ -7,7 +7,7 @@ export const useClientsAnimation = () => {
             opacity: 1,
             y: 0,
             transition: {
-                duration: 0.8,
+                duration: 0.6,
                 ease: [0.22, 1, 0.36, 1],
             },
         },
@@ -18,20 +18,20 @@ export const useClientsAnimation = () => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.08,
-                delayChildren: 0.1,
+                staggerChildren: 0.04,
+                delayChildren: 0.08,
             },
         },
     };
 
     const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20, scale: 0.95 },
+        hidden: { opacity: 0, y: 16, scale: 0.96 },
         visible: {
             opacity: 1,
             y: 0,
             scale: 1,
             transition: {
-                duration: 0.7,
+                duration: 0.45,
                 ease: [0.22, 1, 0.36, 1],
             },
         },

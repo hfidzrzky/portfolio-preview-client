@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWorkOnSet } from "../hooks/useWorkOnSet";
-import { Section, SectionHeader } from "@/shared/ui";
+import { Section, SectionHeader, ProgressiveImage } from "@/shared/ui";
 
 export const WorkOnSet = () => {
     const {
@@ -58,12 +57,19 @@ export const WorkOnSet = () => {
                             <button
                                 key={tab.id}
                                 onClick={() => handleTabSelect(tab.id)}
-                                className={`relative group shrink-0 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-300 cursor-pointer select-none flex items-center gap-2 border ${
+                                className={`relative group shrink-0 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-colors duration-300 cursor-pointer select-none flex items-center gap-2 border ${
                                     isActive
-                                        ? "text-white border-accent bg-transparent"
+                                        ? "text-white border-accent/70 shadow-sm"
                                         : "text-support/70 border-white/10 hover:border-white/25 hover:text-white bg-transparent"
                                 }`}
                             >
+                                {isActive && (
+                                    <motion.div
+                                        layoutId="activeBtsTabPill"
+                                        className="absolute inset-0 rounded-full bg-accent/15 -z-10"
+                                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                                    />
+                                )}
                                 <span>{tab.label}</span>
                                 <span 
                                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono transition-colors ${
@@ -79,8 +85,8 @@ export const WorkOnSet = () => {
                     })}
                 </motion.div>
 
-                {/* ADAPTIVE CLEAN MASONRY GRID PER BTS TAB */}
-                <AnimatePresence mode="wait">
+                {/* ADAPTIVE CLEAN MASONRY GRID PER BTS TAB - popLayout for zero-latency seamless entrance */}
+                <AnimatePresence mode="popLayout">
                     <motion.div
                         key={activeTab}
                         variants={gridContainerVariants}
@@ -89,28 +95,33 @@ export const WorkOnSet = () => {
                         exit="exit"
                         className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4"
                     >
-                        {displayedImages.map((image) => {
+                        {displayedImages.map((image, idx) => {
                             const isActive = activeImageId === image.id;
+                            const aspectRatio = `${image.width || 1200} / ${image.height || 1600}`;
 
                             return (
                                 <motion.div
                                     key={image.id}
-                                    layout
                                     variants={cardVariants}
+                                    whileHover={{ y: -4 }}
+                                    transition={{ duration: 0.25, ease: "easeOut" }}
                                     onClick={() => handleCardClick(image.id)}
                                     style={{ WebkitTapHighlightColor: "transparent" }}
-                                    className="group relative w-full overflow-hidden bg-dark rounded-sm cursor-pointer break-inside-avoid mb-4 select-none outline-none focus:outline-none focus:ring-0 active:outline-none"
+                                    className="group relative w-full overflow-hidden bg-dark rounded-sm cursor-pointer break-inside-avoid mb-4 select-none outline-none focus:outline-none focus:ring-0 active:outline-none border border-white/[0.04] hover:border-white/20 transition-colors duration-300"
                                 >
-                                    {/* Image with natural full color and smooth zoom on hover */}
-                                    <Image
+                                    {/* Progressive Image with skeleton and intrinsic aspect ratio */}
+                                    <ProgressiveImage
                                         src={image.src}
                                         alt={image.alt}
                                         width={image.width || 1200}
                                         height={image.height || 1600}
-                                        loading="lazy"
+                                        priority={idx < 4}
+                                        loading={idx < 4 ? "eager" : "lazy"}
                                         draggable={false}
                                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                                        className={`w-full h-auto object-cover select-none pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                        containerClassName="w-full relative"
+                                        style={{ aspectRatio }}
+                                        className={`w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                             isActive
                                                 ? "scale-105"
                                                 : "scale-100 md:group-hover:scale-105"
@@ -119,7 +130,7 @@ export const WorkOnSet = () => {
 
                                     {/* Cinematic Bottom Gradient Scrim & Short Caption */}
                                     <div 
-                                        className={`absolute inset-0 bg-linear-to-t from-dark/95 via-dark/40 to-transparent pointer-events-none transition-opacity duration-300 flex items-end p-3 sm:p-3.5 md:p-4 ${
+                                        className={`absolute inset-0 bg-linear-to-t from-dark/95 via-dark/40 to-transparent pointer-events-none transition-opacity duration-300 flex items-end p-3 sm:p-3.5 md:p-4 z-10 ${
                                             isActive ? "opacity-100" : "opacity-0 md:group-hover:opacity-100"
                                         }`}
                                     >

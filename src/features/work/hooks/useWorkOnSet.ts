@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import type { Variants } from "framer-motion";
 import { WORK_ON_SET_TABS, WORK_ON_SET_IMAGES } from "../data/work-on-set.data";
 import type { WorkOnSetTab } from "../types";
@@ -23,47 +23,47 @@ export const useWorkOnSet = () => {
         return counts;
     }, []);
 
-    // Handlers
-    const handleTabSelect = (tab: WorkOnSetTab) => {
+    // Handlers memoized with useCallback
+    const handleTabSelect = useCallback((tab: WorkOnSetTab) => {
         setActiveTab(tab);
         setActiveImageId(null);
-    };
+    }, []);
 
-    const handleCardClick = (id: string) => {
+    const handleCardClick = useCallback((id: string) => {
         setActiveImageId((prevId) => (prevId === id ? null : id));
-    };
+    }, []);
 
-    // Framer Motion Animation Variants
+    // Framer Motion Animation Variants - High Performance & Non-blocking
     const sectionVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.1,
+                staggerChildren: 0.1,
+                delayChildren: 0.05,
             },
         },
     };
 
     const headerVariants: Variants = {
-        hidden: { opacity: 0, y: 35 },
+        hidden: { opacity: 0, y: 20 },
         visible: {
             opacity: 1,
             y: 0,
             transition: {
-                duration: 0.9,
+                duration: 0.6,
                 ease: [0.22, 1, 0.36, 1],
             },
         },
     };
 
     const filterContainerVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0, y: 15 },
         visible: {
             opacity: 1,
             y: 0,
             transition: {
-                duration: 0.75,
+                duration: 0.5,
                 ease: [0.22, 1, 0.36, 1],
             },
         },
@@ -74,35 +74,32 @@ export const useWorkOnSet = () => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.06,
-                delayChildren: 0.05,
+                staggerChildren: 0.03,
+                delayChildren: 0.02,
             },
         },
         exit: {
             opacity: 0,
-            transition: { duration: 0.15 },
+            transition: { duration: 0.12 },
         },
     };
 
     const cardVariants: Variants = {
         hidden: { 
             opacity: 0, 
-            y: 30, 
-            scale: 0.96,
+            y: 16, 
         },
         visible: {
             opacity: 1,
             y: 0,
-            scale: 1,
             transition: {
-                duration: 0.65,
+                duration: 0.4,
                 ease: [0.22, 1, 0.36, 1],
             },
         },
         exit: {
             opacity: 0,
-            scale: 0.96,
-            transition: { duration: 0.2 },
+            transition: { duration: 0.1 },
         },
     };
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ClientCardProps } from "../types";
 
-export const ClientCard: React.FC<ClientCardProps> = ({
+export const ClientCard: React.FC<ClientCardProps> = React.memo(({
     client,
     variants,
 }) => {
@@ -15,11 +15,12 @@ export const ClientCard: React.FC<ClientCardProps> = ({
     return (
         <motion.div
             variants={variants}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            whileHover={{ y: -4, scale: 1.06 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
             title={client.name}
             aria-label={client.name}
-            className="group relative flex items-center justify-center h-20 sm:h-24 md:h-28 w-full p-2 select-none outline-none cursor-pointer"
+            className="group relative flex items-center justify-center h-20 sm:h-24 md:h-28 w-full p-2 select-none outline-none cursor-pointer bg-transparent"
         >
             <div className="relative w-full h-full flex items-center justify-center">
                 {hasImage ? (
@@ -30,12 +31,14 @@ export const ClientCard: React.FC<ClientCardProps> = ({
                         height={100}
                         sizes="(max-width: 640px) 140px, (max-width: 1024px) 180px, 200px"
                         draggable={false}
+                        unoptimized
+                        loading="eager"
                         onError={() => setHasError(true)}
-                        className="max-h-14 sm:max-h-16 md:max-h-20 w-auto max-w-[90%] md:max-w-[85%] object-contain select-none pointer-events-none transition-transform duration-300"
+                        className="max-h-14 sm:max-h-16 md:max-h-20 w-auto max-w-[90%] md:max-w-[85%] object-contain select-none pointer-events-none opacity-75 group-hover:opacity-100 group-hover:brightness-110 transition-all duration-300"
                     />
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.05] px-3 py-2 text-center group-hover:border-accent group-hover:bg-white/[0.08] transition-all duration-300 shadow-sm">
-                        <span className="text-xs sm:text-sm font-medium tracking-wider text-primary group-hover:text-primary transition-colors line-clamp-2 uppercase select-none">
+                    <div className="w-full h-full flex items-center justify-center text-center">
+                        <span className="text-xs sm:text-sm font-medium tracking-wider text-support group-hover:text-primary transition-colors line-clamp-2 uppercase select-none">
                             {client.name}
                         </span>
                     </div>
@@ -43,5 +46,7 @@ export const ClientCard: React.FC<ClientCardProps> = ({
             </div>
         </motion.div>
     );
-};
+});
+
+ClientCard.displayName = "ClientCard";
 

@@ -63,7 +63,7 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
                                 className="object-cover opacity-60 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 ease-out pointer-events-none select-none"
                             />
                             {/* Cinematic vignette */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
                         </div>
                     ))}
                 </div>
@@ -84,7 +84,7 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
                                 sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 288px"
                                 className="object-cover opacity-60 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 ease-out pointer-events-none select-none"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
                         </div>
                     ))}
                 </div>

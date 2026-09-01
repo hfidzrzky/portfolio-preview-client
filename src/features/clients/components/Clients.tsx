@@ -16,7 +16,7 @@ export const Clients: React.FC = () => {
                 variants={headerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "120px" }}
+                viewport={{ once: true, amount: 0.2, margin: "-40px" }}
             >
                 <SectionHeader
                     title={
@@ -36,8 +36,8 @@ export const Clients: React.FC = () => {
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "120px" }}
-                className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 md:gap-8 w-full items-center justify-items-center"
+                viewport={{ once: true, amount: 0.15, margin: "-40px" }}
+                className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-5 w-full items-center justify-items-center"
             >
                 {CLIENTS_DATA.map((client) => (
                     <ClientCard
