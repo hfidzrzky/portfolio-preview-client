@@ -60,7 +60,7 @@ export const About = () => {
                                 {CLIENT_PROFILE.education}
                             </p>
                             <p className="text-sm text-support mt-1 font-light italic tracking-wide">
-                                Majoring in {CLIENT_PROFILE.major}
+                                Majoring {CLIENT_PROFILE.major}
                             </p>
                         </motion.div>
 
@@ -85,33 +85,53 @@ export const About = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
-                    className="md:col-span-7 flex flex-col justify-center"
+                    className="md:col-span-7 flex flex-col justify-start md:pt-14 space-y-6"
                 >
+                    {/* Intro Block: A Creative specialist from Bandung City */}
                     <motion.div
                         variants={itemVariants}
-                        className="mb-12 border-l-2 border-accent pl-8 py-2"
+                        className="border-l-2 border-accent pl-6 md:pl-8 py-1"
                     >
                         <p className="text-xl md:text-2xl font-light leading-relaxed text-support tracking-wide">
-                            A <span className="text-primary font-medium">{CLIENT_PROFILE.major}</span> specialist
+                            A <span className="text-primary font-medium">Creative</span> specialist
                             from <span className="text-primary font-medium">{CLIENT_PROFILE.origin}</span>.
                             <br className="hidden lg:block" />
-                             Focusing on cinematic storytelling through light and frames.
+                            {" "}Focusing on cinematic storytelling through light and frames.
                         </p>
                     </motion.div>
 
-                    <motion.span
-                        variants={itemVariants}
-                        className="text-accent/30 block mb-4 text-7xl md:text-8xl font-serif leading-none italic select-none"
-                    >
-                        &ldquo;
-                    </motion.span>
+                    {/* Bio Section with Red Decorative Quote */}
+                    <motion.div variants={itemVariants} className="relative pt-1">
+                        {/* Red Quote Mark */}
+                        <span 
+                            className="text-accent block text-4xl md:text-5xl font-serif leading-none italic select-none opacity-85 -mb-2 md:-mb-3 pt-6"
+                            aria-hidden="true"
+                        >
+                            &ldquo;
+                        </span>
 
-                    <motion.h3
-                        variants={itemVariants}
-                        className="text-2xl md:text-3xl lg:text-4xl font-light leading-[1.6] text-primary tracking-wide"
-                    >
-                        {CLIENT_PROFILE.bio}
-                    </motion.h3>
+                        {/* Bio Content Container */}
+                        <div className="space-y-4">
+                            {/* Paragraph 1: Greeting with Bold White Name */}
+                            <motion.p
+                                variants={itemVariants}
+                                className="text-base md:text-lg text-support font-light leading-relaxed tracking-wide"
+                            >
+                                Hi, I’m <span className="font-semibold text-primary">Ilham Hakim</span>, a creative specialist based in Bandung.
+                            </motion.p>
+
+                            {/* Remaining Bio Paragraphs */}
+                            {CLIENT_PROFILE.bio.map((paragraph, index) => (
+                                <motion.p
+                                    key={index}
+                                    variants={itemVariants}
+                                    className="text-base md:text-lg text-support font-light leading-relaxed tracking-wide"
+                                >
+                                    {paragraph}
+                                </motion.p>
+                            ))}
+                        </div>
+                    </motion.div>
                 </motion.div>
             </div>
         </Section>

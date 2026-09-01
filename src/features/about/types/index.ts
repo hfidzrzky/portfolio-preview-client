@@ -5,5 +5,7 @@ export interface ClientProfile {
     education: string;
     major: string;
     roles: string[];
-    bio: string;
+    bio: string[];
 }
+
+

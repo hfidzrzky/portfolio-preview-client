@@ -7,9 +7,8 @@ export * from "./components/WorkOnSet";
 export * from "./components/ArchivedFramesMarquee";
 export * from "./hooks/useProjectGallery";
 export * from "./hooks/useGalleryRow";
-export * from "./hooks/useArchivedMarquee";
+export * from "./hooks/useInteractiveMarquee";
 export * from "./types";
 export * from "./data/projects.data";
 export * from "./data/work-on-set.data";
 export * from "./data/archived-frames.data";
-

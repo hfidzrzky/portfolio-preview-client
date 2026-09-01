@@ -1,55 +1,57 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import Image from "next/image";
 import type { ArchivedFrameItem } from "../types";
-import { useArchivedMarquee } from "../hooks/useArchivedMarquee";
+import { useInteractiveMarquee } from "../hooks/useInteractiveMarquee";
 
 export interface ArchivedFramesMarqueeProps {
     items: ArchivedFrameItem[];
     direction?: "left" | "right";
     speed?: "fast" | "normal" | "slow";
+    className?: string;
 }
 
 export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
     items,
     direction = "left",
     speed = "normal",
+    className = "",
 }) => {
-    const {
-        containerRef,
-        onMouseDown,
-        onMouseMove,
-        onMouseUp,
-        onMouseLeave,
-        onTouchStart,
-        onTouchMove,
-        onTouchEnd,
-    } = useArchivedMarquee({ direction, speed });
+    const { containerRef, innerRef, track1Ref, isDragging, handlers } = useInteractiveMarquee({
+        direction,
+        speed,
+        pauseOnHover: true,
+    });
 
-    const repeatedItems = useMemo(() => Array.from({ length: 3 }).flatMap(() => items), [items]);
+    if (!items || items.length === 0) return null;
 
     return (
         <div
             ref={containerRef}
-            className="flex w-full overflow-x-auto cursor-grab active:cursor-grabbing scrollbar-none select-none"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-            onMouseLeave={onMouseLeave}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            onDragStart={(e) => e.preventDefault()}
+            className={`relative w-full overflow-hidden select-none py-1 md:py-1.5 touch-pan-y ${
+                isDragging ? "cursor-grabbing" : "cursor-grab"
+            } ${className}`}
+            onWheel={handlers.onWheel}
+            onMouseDown={handlers.onMouseDown}
+            onTouchStart={handlers.onTouchStart}
+            onTouchMove={handlers.onTouchMove}
+            onTouchEnd={handlers.onTouchEnd}
+            onMouseEnter={handlers.onMouseEnter}
+            onMouseLeave={handlers.onMouseLeave}
+            onClickCapture={handlers.onClickCapture}
         >
-            <div className="flex w-max select-none">
-                {/* Block 1 */}
-                <div className="flex shrink-0">
-                    {repeatedItems.map((item, index) => (
+            <div
+                ref={innerRef}
+                className="flex w-max will-change-transform"
+                style={{ transform: "translate3d(0, 0, 0)" }}
+            >
+                {/* Track 1 */}
+                <div ref={track1Ref} className="flex shrink-0 items-center gap-3 md:gap-4 pr-3 md:pr-4">
+                    {items.map((item) => (
                         <div
-                            key={`block1-${item.id}-${index}`}
-                            className="relative w-40 md:w-56 lg:w-72 aspect-video bg-zinc-900 overflow-hidden shrink-0 select-none"
+                            key={`t1-${item.id}`}
+                            className="relative w-44 sm:w-56 md:w-64 lg:w-72 aspect-video rounded-sm overflow-hidden bg-zinc-900 shrink-0 group/frame"
                         >
                             <Image
                                 src={item.src}
@@ -57,19 +59,21 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
                                 fill
                                 loading="lazy"
                                 draggable={false}
-                                sizes="(max-width: 768px) 160px, (max-width: 1024px) 224px, 288px"
-                                className="object-cover opacity-60 hover:opacity-100 transition-all duration-700 pointer-events-none select-none"
+                                sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 288px"
+                                className="object-cover opacity-60 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 ease-out pointer-events-none select-none"
                             />
+                            {/* Cinematic vignette */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
                         </div>
                     ))}
                 </div>
 
-                {/* Block 2 (Infinite duplicate clone for seamless loop) */}
-                <div className="flex shrink-0">
-                    {repeatedItems.map((item, index) => (
+                {/* Track 2 (Seamless infinite clone) */}
+                <div className="flex shrink-0 items-center gap-3 md:gap-4 pr-3 md:pr-4" aria-hidden="true">
+                    {items.map((item) => (
                         <div
-                            key={`block2-${item.id}-${index}`}
-                            className="relative w-40 md:w-56 lg:w-72 aspect-video bg-zinc-900 overflow-hidden shrink-0 select-none"
+                            key={`t2-${item.id}`}
+                            className="relative w-44 sm:w-56 md:w-64 lg:w-72 aspect-video rounded-sm overflow-hidden bg-zinc-900 shrink-0 group/frame"
                         >
                             <Image
                                 src={item.src}
@@ -77,9 +81,10 @@ export const ArchivedFramesMarquee: React.FC<ArchivedFramesMarqueeProps> = ({
                                 fill
                                 loading="lazy"
                                 draggable={false}
-                                sizes="(max-width: 768px) 160px, (max-width: 1024px) 224px, 288px"
-                                className="object-cover opacity-60 hover:opacity-100 transition-all duration-700 pointer-events-none select-none"
+                                sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 288px"
+                                className="object-cover opacity-60 group-hover/frame:opacity-100 group-hover/frame:scale-105 transition-all duration-500 ease-out pointer-events-none select-none"
                             />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
                         </div>
                     ))}
                 </div>

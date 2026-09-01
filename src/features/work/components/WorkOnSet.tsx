@@ -3,22 +3,17 @@
 import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layers } from "lucide-react";
 import { useWorkOnSet } from "../hooks/useWorkOnSet";
 import { Section, SectionHeader } from "@/shared/ui";
 
 export const WorkOnSet = () => {
     const {
-        categories,
-        selectedCategory,
-        categoryCounts,
+        tabs,
+        activeTab,
+        tabCounts,
         displayedImages,
         activeImageId,
-        isExpanded,
-        hasMore,
-        remainingCount,
-        handleCategorySelect,
-        handleToggleExpand,
+        handleTabSelect,
         handleCardClick,
         sectionVariants,
         headerVariants,
@@ -50,26 +45,26 @@ export const WorkOnSet = () => {
                     />
                 </motion.div>
 
-                {/* Category Filter Pills */}
+                {/* BTS TAB SWITCHER (BTS 01, BTS 02, BTS 03) */}
                 <motion.div 
                     variants={filterContainerVariants}
                     className="mb-8 md:mb-12 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none"
                 >
-                    {categories.map((cat) => {
-                        const isActive = selectedCategory === cat.id;
-                        const count = categoryCounts[cat.id] || 0;
+                    {tabs.map((tab) => {
+                        const isActive = activeTab === tab.id;
+                        const count = tabCounts[tab.id] || 0;
 
                         return (
                             <button
-                                key={cat.id}
-                                onClick={() => handleCategorySelect(cat.id)}
-                                className={`relative group shrink-0 px-3.5 md:px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-300 cursor-pointer select-none flex items-center gap-2 border ${
+                                key={tab.id}
+                                onClick={() => handleTabSelect(tab.id)}
+                                className={`relative group shrink-0 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-300 cursor-pointer select-none flex items-center gap-2 border ${
                                     isActive
                                         ? "text-white border-accent bg-transparent"
                                         : "text-support/70 border-white/10 hover:border-white/25 hover:text-white bg-transparent"
                                 }`}
                             >
-                                <span>{cat.label}</span>
+                                <span>{tab.label}</span>
                                 <span 
                                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono transition-colors ${
                                         isActive 
@@ -84,12 +79,16 @@ export const WorkOnSet = () => {
                     })}
                 </motion.div>
 
-                {/* Clean Minimalist Masonry Layout */}
-                <motion.div 
-                    variants={gridContainerVariants}
-                    className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4"
-                >
-                    <AnimatePresence mode="popLayout">
+                {/* ADAPTIVE CLEAN MASONRY GRID PER BTS TAB */}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeTab}
+                        variants={gridContainerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4"
+                    >
                         {displayedImages.map((image) => {
                             const isActive = activeImageId === image.id;
 
@@ -98,14 +97,11 @@ export const WorkOnSet = () => {
                                     key={image.id}
                                     layout
                                     variants={cardVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 } }}
                                     onClick={() => handleCardClick(image.id)}
                                     style={{ WebkitTapHighlightColor: "transparent" }}
                                     className="group relative w-full overflow-hidden bg-dark rounded-sm cursor-pointer break-inside-avoid mb-4 select-none outline-none focus:outline-none focus:ring-0 active:outline-none"
                                 >
-                                    {/* Image with smooth grayscale hover transition */}
+                                    {/* Image with natural full color and smooth zoom on hover */}
                                     <Image
                                         src={image.src}
                                         alt={image.alt}
@@ -114,21 +110,21 @@ export const WorkOnSet = () => {
                                         loading="lazy"
                                         draggable={false}
                                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                                        className={`w-full h-auto object-cover select-none pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                        className={`w-full h-auto object-cover select-none pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                             isActive
-                                                ? "grayscale-0 scale-105"
-                                                : "grayscale md:group-hover:grayscale-0 md:group-hover:scale-105"
+                                                ? "scale-105"
+                                                : "scale-100 md:group-hover:scale-105"
                                         }`}
                                     />
 
-                                    {/* Minimalist Dark Gradient & Short Caption */}
+                                    {/* Cinematic Bottom Gradient Scrim & Short Caption */}
                                     <div 
-                                        className={`absolute inset-0 bg-linear-to-t from-dark/90 via-dark/25 to-transparent pointer-events-none transition-opacity duration-300 flex items-end p-3 sm:p-3.5 md:p-4 ${
+                                        className={`absolute inset-0 bg-linear-to-t from-dark/95 via-dark/40 to-transparent pointer-events-none transition-opacity duration-300 flex items-end p-3 sm:p-3.5 md:p-4 ${
                                             isActive ? "opacity-100" : "opacity-0 md:group-hover:opacity-100"
                                         }`}
                                     >
                                         <p 
-                                            className={`text-[9px] sm:text-[9.5px] md:text-[10.5px] text-primary/95 font-normal uppercase tracking-[0.15em] sm:tracking-[0.18em] leading-tight line-clamp-2 transition-transform duration-300 ${
+                                            className={`text-[9px] sm:text-[9.5px] md:text-[10.5px] text-primary font-normal uppercase tracking-[0.15em] sm:tracking-[0.18em] leading-tight line-clamp-2 transition-transform duration-300 ${
                                                 isActive ? "translate-y-0 text-white" : "translate-y-1.5 md:group-hover:translate-y-0"
                                             }`}
                                         >
@@ -138,29 +134,8 @@ export const WorkOnSet = () => {
                                 </motion.div>
                             );
                         })}
-                    </AnimatePresence>
-                </motion.div>
-
-                {/* Progressive Disclosure Button */}
-                {hasMore && (
-                    <motion.div 
-                        variants={filterContainerVariants}
-                        className="mt-8 md:mt-12 flex justify-center"
-                    >
-                        <button
-                            onClick={handleToggleExpand}
-                            className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-full text-xs uppercase tracking-[0.25em] font-semibold text-primary bg-dark/90 border border-white/15 hover:border-accent transition-all duration-300 cursor-pointer select-none active:scale-95"
-                        >
-                            <Layers className="w-4 h-4 text-accent transition-transform duration-300 group-hover:rotate-12" />
-                            <span>
-                                {isExpanded 
-                                    ? "Show Curated Frames" 
-                                    : `Explore All Archives (+${remainingCount})`
-                                }
-                            </span>
-                        </button>
                     </motion.div>
-                )}
+                </AnimatePresence>
             </motion.div>
         </Section>
     );

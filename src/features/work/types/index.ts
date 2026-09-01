@@ -1,5 +1,3 @@
-import type { StaticImageData } from "next/image";
-
 export type ProjectMediaType = "image" | "video";
 export type MediaAspectRatio = "16/9" | "4/5" | "9/16" | "1/1" | "21/9";
 export type MediaFitMode = "contain" | "cover";
@@ -37,15 +35,17 @@ export interface ProjectRowSection {
     projects: Project[];
 }
 
+export type WorkOnSetTab = 'bts-01' | 'bts-02' | 'bts-03';
 export type WorkOnSetCategory = 'all' | 'directing' | 'gear' | 'lighting' | 'candid' | 'project';
 
 export interface WorkOnSetImage {
     id: string;
     src: string;
     alt: string;
-    category: Exclude<WorkOnSetCategory, 'all'>;
+    tab: WorkOnSetTab;
+    category?: Exclude<WorkOnSetCategory, 'all'>;
     aspectRatio: 'portrait' | 'landscape' | 'vertical' | 'square';
-    tag: string;
+    tag?: string;
     caption?: string;
     featured?: boolean;
     width?: number;

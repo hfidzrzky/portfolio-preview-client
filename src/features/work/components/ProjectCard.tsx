@@ -24,7 +24,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             <div className="flex flex-col flex-1 justify-between px-0.5">
                 <div className="flex flex-col gap-2">
                     {/* 1. Title (Clean Full-Width Multi-Line Wrapping Display) */}
-                    <h3 className="text-base md:text-lg font-medium text-primary uppercase tracking-wider leading-snug break-words text-balance group-hover:text-accent transition-colors duration-300">
+                    <h3 className="text-base md:text-lg font-medium text-primary uppercase tracking-wider leading-snug wrap-break-words text-balance group-hover:text-accent transition-colors duration-300">
                         {project.title}
                     </h3>
 
@@ -34,7 +34,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                             {project.roles.map((role, idx) => (
                                 <span
                                     key={`${project.id}-role-${idx}`}
-                                    className="inline-flex items-center px-2.5 py-0.5 text-[10px] md:text-[11px] font-mono font-medium uppercase tracking-widest text-accent bg-accent/[0.06] border border-accent/30 rounded-full transition-all duration-300 group-hover:border-accent/70 group-hover:bg-accent/15 group-hover:text-primary"
+                                    className="inline-flex items-center px-2.5 py-0.5 text-[10px] md:text-[11px] font-mono font-medium uppercase tracking-widest text-accent bg-accent/6 border border-accent/30 rounded-full transition-all duration-300 group-hover:border-accent/70 group-hover:bg-accent/15 group-hover:text-primary"
                                 >
                                     {role}
                                 </span>
