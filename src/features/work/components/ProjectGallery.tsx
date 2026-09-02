@@ -18,10 +18,10 @@ export const ProjectGallery = () => {
                 <div className="max-w-7xl mx-auto w-full px-6 md:px-16">
                     <SectionHeader
                         badge="Archived Frames"
-                        description="Visual explorations and light studies."
+                        description="Visual explorations and light."
                     />
                 </div>
-                <div className="relative flex flex-col w-full overflow-hidden mt-6">
+                <div className="relative flex flex-col w-full overflow-hidden mt-2">
                     {/* Cinematic edge fade masks */}
                     <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 md:w-36 bg-linear-to-r from-background to-transparent z-10" />
                     <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 md:w-36 bg-linear-to-l from-background to-transparent z-10" />

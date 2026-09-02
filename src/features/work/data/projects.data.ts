@@ -11,7 +11,7 @@ export const PROJECTS: Project[] = [
             { id: "1-2", type: "video", src: "/selected-works/project-1/slide-2.mp4", alt: "Campaign Yamaha Indonesia Shot 2" },
             { id: "1-3", type: "video", src: "/selected-works/project-1/slide-3.mp4", alt: "Campaign Yamaha Indonesia Shot 3" },
         ],
-        url: "https://abcd",
+        url: "#",
         fitMode: "contain",
         ambientBackdrop: true,
     },
@@ -23,7 +23,7 @@ export const PROJECTS: Project[] = [
             { id: "2-1", type: "video", src: "/selected-works/project-2/slide-1.mp4", alt: "Campaign South Legend Frame 1" },
             { id: "2-2", type: "video", src: "/selected-works/project-2/slide-2.mp4", alt: "Campaign South Legend Frame 2" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "3",
@@ -33,7 +33,7 @@ export const PROJECTS: Project[] = [
             { id: "3-1", type: "video", src: "/selected-works/project-3/slide-1.mp4", alt: "Campaign South Legend Shot 1" },
             { id: "3-2", type: "video", src: "/selected-works/project-3/slide-2.mp4", alt: "Campaign South Legend Shot 2" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "4",
@@ -43,7 +43,7 @@ export const PROJECTS: Project[] = [
             { id: "4-1", type: "video", src: "/selected-works/project-4/slide-1.mp4", alt: "MV Tukar Lalu Shot 1" },
             { id: "4-2", type: "video", src: "/selected-works/project-4/slide-2.mp4", alt: "MV Tukar Lalu Shot 2" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "5",
@@ -54,7 +54,7 @@ export const PROJECTS: Project[] = [
             { id: "5-2", type: "video", src: "/selected-works/project-5/slide-2.mp4", alt: "MV Layang - Layang Shot 2" },
             { id: "5-3", type: "video", src: "/selected-works/project-5/slide-3.mp4", alt: "MV Layang - Layang Shot 3" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "6",
@@ -64,7 +64,7 @@ export const PROJECTS: Project[] = [
             { id: "6-1", type: "video", src: "/selected-works/project-6/slide-1.mp4", alt: "MV MAMA Shot 1" },
             { id: "6-2", type: "video", src: "/selected-works/project-6/slide-2.mp4", alt: "MV MAMA Shot 2" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
 
     // --- ROW 2 (07 - 12): Volume 02: Motion & Visual Experiments ---
@@ -75,7 +75,7 @@ export const PROJECTS: Project[] = [
         media: [
             { id: "7-1", type: "video", src: "/selected-works/project-7/slide-1.mp4", alt: "Company Profile ITB 1920 Shot 1" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "8",
@@ -85,7 +85,7 @@ export const PROJECTS: Project[] = [
             { id: "8-1", type: "video", src: "/selected-works/project-8/slide-1.mp4", alt: "Campaign InDrive Shot 1" },
             { id: "8-2", type: "video", src: "/selected-works/project-8/slide-2.mp4", alt: "Campaign InDrive Shot 2" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "9",
@@ -102,7 +102,7 @@ export const PROJECTS: Project[] = [
             { id: "9-8", type: "image", src: "/selected-works/project-9/slide-8.webp", alt: "Campaign SVH Still 8" },
             { id: "9-9", type: "image", src: "/selected-works/project-9/slide-9.webp", alt: "Campaign SVH Still 9" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "10",
@@ -112,7 +112,7 @@ export const PROJECTS: Project[] = [
             { id: "10-1", type: "video", src: "/selected-works/project-10/slide-1.mp4", alt: "Short Film Sony Nanti Shot 1" },
             { id: "10-2", type: "video", src: "/selected-works/project-10/slide-2.mp4", alt: "Short Film Sony Nanti Shot 2" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "11",
@@ -124,7 +124,7 @@ export const PROJECTS: Project[] = [
             { id: "11-3", type: "image", src: "/selected-works/project-11/slide-3.webp", alt: "Campaign THESILVERSKY Still 3" },
             { id: "11-4", type: "image", src: "/selected-works/project-11/slide-4.webp", alt: "Campaign THESILVERSKY Still 4" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "12",
@@ -134,7 +134,7 @@ export const PROJECTS: Project[] = [
             { id: "12-1", type: "video", src: "/selected-works/project-12/slide-1.mp4", alt: "Campaign Urban Exchange Shot 1" },
             { id: "12-2", type: "video", src: "/selected-works/project-12/slide-2.mp4", alt: "Campaign Urban Exchange Shot 2" },
         ],
-        url: "https://abcd",
+        url: "#",
         rotate: -90,
     },
 
@@ -149,7 +149,7 @@ export const PROJECTS: Project[] = [
             { id: "13-3", type: "image", src: "/selected-works/project-13/slide-3.webp", alt: "Photoshoot Livehaf Still 3" },
             { id: "13-4", type: "image", src: "/selected-works/project-13/slide-4.webp", alt: "Photoshoot Livehaf Still 4" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "14",
@@ -164,7 +164,7 @@ export const PROJECTS: Project[] = [
             { id: "14-6", type: "image", src: "/selected-works/project-14/slide-6.webp", alt: "Photoshoot TRISET Still 6" },
             { id: "14-7", type: "image", src: "/selected-works/project-14/slide-7.webp", alt: "Photoshoot TRISET Still 7" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "15",
@@ -178,7 +178,7 @@ export const PROJECTS: Project[] = [
             { id: "15-5", type: "image", src: "/selected-works/project-15/slide-5.webp", alt: "Photoshoot Hijacket Still 5" },
             { id: "15-6", type: "image", src: "/selected-works/project-15/slide-6.webp", alt: "Photoshoot Hijacket Still 6" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "16",
@@ -192,7 +192,7 @@ export const PROJECTS: Project[] = [
             { id: "16-5", type: "image", src: "/selected-works/project-16/slide-5.webp", alt: "Photoshoot Livehaf Still 5" },
             { id: "16-6", type: "image", src: "/selected-works/project-16/slide-6.webp", alt: "Photoshoot Livehaf Still 6" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "17",
@@ -203,7 +203,7 @@ export const PROJECTS: Project[] = [
             { id: "17-2", type: "video", src: "/selected-works/project-17/slide-2.mp4", alt: "Music Video Rasukma Clip 2" },
             { id: "17-3", type: "video", src: "/selected-works/project-17/slide-3.mp4", alt: "Music Video Rasukma Clip 3" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "18",
@@ -214,7 +214,7 @@ export const PROJECTS: Project[] = [
             { id: "18-2", type: "video", src: "/selected-works/project-18/slide-2.mp4", alt: "Documentary Bank Indonesia Clip 2" },
             { id: "18-3", type: "video", src: "/selected-works/project-18/slide-3.mp4", alt: "Documentary Bank Indonesia Clip 3" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
     {
         id: "19",
@@ -225,7 +225,7 @@ export const PROJECTS: Project[] = [
             { id: "19-2", type: "video", src: "/selected-works/project-19/slide-2.mp4", alt: "Music Video Manakala Shot 2" },
             { id: "19-3", type: "video", src: "/selected-works/project-19/slide-3.mp4", alt: "Music Video Manakala Shot 3" },
         ],
-        url: "https://abcd",
+        url: "#",
     },
 ];
 
