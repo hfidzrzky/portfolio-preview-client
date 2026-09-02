@@ -102,7 +102,7 @@ export const WorkOnSet = () => {
                                     variants={cardVariants}
                                     whileHover={{ y: -4 }}
                                     transition={{ duration: 0.25, ease: "easeOut" }}
-                                    className="group relative w-full overflow-hidden bg-dark rounded-sm break-inside-avoid mb-4 select-none border border-white/[0.04] hover:border-white/20 transition-colors duration-300"
+                                    className="group relative w-full overflow-hidden bg-dark rounded-sm break-inside-avoid mb-4 select-none border border-white/4 hover:border-white/20 transition-colors duration-300"
                                 >
                                     {/* Progressive Image with skeleton and intrinsic aspect ratio */}
                                     <ProgressiveImage
