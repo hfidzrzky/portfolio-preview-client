@@ -7,7 +7,6 @@ import type { WorkOnSetTab } from "../types";
 
 export const useWorkOnSet = () => {
     const [activeTab, setActiveTab] = useState<WorkOnSetTab>("bts-01");
-    const [activeImageId, setActiveImageId] = useState<string | null>(null);
 
     // Filter images according to active tab volume
     const displayedImages = useMemo(() => {
@@ -26,11 +25,6 @@ export const useWorkOnSet = () => {
     // Handlers memoized with useCallback
     const handleTabSelect = useCallback((tab: WorkOnSetTab) => {
         setActiveTab(tab);
-        setActiveImageId(null);
-    }, []);
-
-    const handleCardClick = useCallback((id: string) => {
-        setActiveImageId((prevId) => (prevId === id ? null : id));
     }, []);
 
     // Framer Motion Animation Variants - High Performance & Non-blocking
@@ -108,9 +102,7 @@ export const useWorkOnSet = () => {
         activeTab,
         tabCounts,
         displayedImages,
-        activeImageId,
         handleTabSelect,
-        handleCardClick,
         sectionVariants,
         headerVariants,
         filterContainerVariants,

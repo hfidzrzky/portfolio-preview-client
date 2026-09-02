@@ -11,9 +11,7 @@ export const WorkOnSet = () => {
         activeTab,
         tabCounts,
         displayedImages,
-        activeImageId,
         handleTabSelect,
-        handleCardClick,
         sectionVariants,
         headerVariants,
         filterContainerVariants,
@@ -96,7 +94,6 @@ export const WorkOnSet = () => {
                         className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-4"
                     >
                         {displayedImages.map((image, idx) => {
-                            const isActive = activeImageId === image.id;
                             const aspectRatio = `${image.width || 1200} / ${image.height || 1600}`;
 
                             return (
@@ -105,9 +102,7 @@ export const WorkOnSet = () => {
                                     variants={cardVariants}
                                     whileHover={{ y: -4 }}
                                     transition={{ duration: 0.25, ease: "easeOut" }}
-                                    onClick={() => handleCardClick(image.id)}
-                                    style={{ WebkitTapHighlightColor: "transparent" }}
-                                    className="group relative w-full overflow-hidden bg-dark rounded-sm cursor-pointer break-inside-avoid mb-4 select-none outline-none focus:outline-none focus:ring-0 active:outline-none border border-white/[0.04] hover:border-white/20 transition-colors duration-300"
+                                    className="group relative w-full overflow-hidden bg-dark rounded-sm break-inside-avoid mb-4 select-none border border-white/[0.04] hover:border-white/20 transition-colors duration-300"
                                 >
                                     {/* Progressive Image with skeleton and intrinsic aspect ratio */}
                                     <ProgressiveImage
@@ -121,27 +116,8 @@ export const WorkOnSet = () => {
                                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
                                         containerClassName="w-full relative"
                                         style={{ aspectRatio }}
-                                        className={`w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                            isActive
-                                                ? "scale-105"
-                                                : "scale-100 md:group-hover:scale-105"
-                                        }`}
+                                        className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] scale-100 md:group-hover:scale-105"
                                     />
-
-                                    {/* Cinematic Bottom Gradient Scrim & Short Caption */}
-                                    <div 
-                                        className={`absolute inset-0 bg-linear-to-t from-dark/95 via-dark/40 to-transparent pointer-events-none transition-opacity duration-300 flex items-end p-3 sm:p-3.5 md:p-4 z-10 ${
-                                            isActive ? "opacity-100" : "opacity-0 md:group-hover:opacity-100"
-                                        }`}
-                                    >
-                                        <p 
-                                            className={`text-[9px] sm:text-[9.5px] md:text-[10.5px] text-primary font-normal uppercase tracking-[0.15em] sm:tracking-[0.18em] leading-tight line-clamp-2 transition-transform duration-300 ${
-                                                isActive ? "translate-y-0 text-white" : "translate-y-1.5 md:group-hover:translate-y-0"
-                                            }`}
-                                        >
-                                            {image.alt}
-                                        </p>
-                                    </div>
                                 </motion.div>
                             );
                         })}
