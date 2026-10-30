@@ -10,7 +10,7 @@ import type { NextRequest } from "next/server";
  * - (Atau Anda bisa langsung menghapus file ini jika sudah lunas sepenuhnya).
  * ============================================================================
  */
-const IS_LOCKED = true;
+const IS_LOCKED = false;
 
 export function middleware(request: NextRequest) {
   if (IS_LOCKED) {
