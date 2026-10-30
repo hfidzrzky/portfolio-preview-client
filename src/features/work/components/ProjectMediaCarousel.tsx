@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import type { ProjectMediaItem, MediaAspectRatio, MediaFitMode, MediaRotation } from "../types";
 import { useProjectCarousel } from "../hooks/useProjectCarousel";
 import { ProjectMediaSlide } from "./media/ProjectMediaSlide";
@@ -12,6 +12,8 @@ interface ProjectMediaCarouselProps {
     fitMode?: MediaFitMode;
     rotate?: MediaRotation;
     ambientBackdrop?: boolean;
+    onMediaClick?: (index: number) => void;
+    onIndexChange?: (index: number) => void;
 }
 
 const ASPECT_RATIO_CLASSES: Record<MediaAspectRatio, string> = {
@@ -29,6 +31,8 @@ export const ProjectMediaCarousel = memo(({
     fitMode = "contain",
     rotate,
     ambientBackdrop = true,
+    onMediaClick,
+    onIndexChange,
 }: ProjectMediaCarouselProps) => {
     const {
         activeIndex,
@@ -45,6 +49,10 @@ export const ProjectMediaCarousel = memo(({
         handleWheel,
     } = useProjectCarousel({ totalItems: media.length });
 
+    useEffect(() => {
+        onIndexChange?.(activeIndex);
+    }, [activeIndex, onIndexChange]);
+
     const hasMultipleSlides = media.length > 1;
     const ratioClass = ASPECT_RATIO_CLASSES[aspectRatio] || "aspect-video";
 
@@ -58,6 +66,8 @@ export const ProjectMediaCarousel = memo(({
                     ? isDraggingMouse
                         ? "cursor-grabbing"
                         : "cursor-grab"
+                    : onMediaClick
+                    ? "cursor-pointer"
                     : "cursor-default"
             }`}
             onTouchStart={handleTouchStart}
@@ -67,6 +77,11 @@ export const ProjectMediaCarousel = memo(({
             onMouseUp={handleMouseUpOrLeave}
             onMouseLeave={handleMouseUpOrLeave}
             onClickCapture={handleClickCapture}
+            onClick={() => {
+                if (onMediaClick && !isDraggingMouse) {
+                    onMediaClick(activeIndex);
+                }
+            }}
             onWheel={handleWheel}
         >
             {/* Media Slides Track */}

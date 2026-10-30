@@ -1,13 +1,23 @@
-import React from "react";
-import Link from "next/link";
+"use client";
+
+import React, { useState } from "react";
 import type { Project } from "../types";
 import { ProjectMediaCarousel } from "./ProjectMediaCarousel";
+import { useProjectPreview } from "../context/ProjectPreviewContext";
 
 export interface ProjectCardProps {
     project: Project;
 }
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
+    const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+    const { openPreview } = useProjectPreview();
+
+    const handleOpenPreview = (e: React.MouseEvent | React.TouchEvent) => {
+        e.stopPropagation();
+        openPreview(project, currentSlideIndex);
+    };
+
     return (
         <div className="group flex flex-col justify-between h-full gap-4 select-none w-full">
             {/* Visual Exploration Area: Multi-Slide Media Carousel */}
@@ -18,13 +28,18 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 fitMode={project.fitMode}
                 rotate={project.rotate}
                 ambientBackdrop={project.ambientBackdrop}
+                onIndexChange={setCurrentSlideIndex}
+                onMediaClick={(idx) => openPreview(project, idx)}
             />
 
             {/* Information & Narrative Metadata */}
             <div className="flex flex-col flex-1 justify-between px-0.5">
                 <div className="flex flex-col gap-2">
                     {/* 1. Title (Clean Full-Width Multi-Line Wrapping Display) */}
-                    <h3 className="text-base md:text-lg font-medium text-primary uppercase tracking-wider leading-snug wrap-break-words text-balance group-hover:text-accent transition-colors duration-300">
+                    <h3 
+                        onClick={handleOpenPreview}
+                        className="text-base md:text-lg font-medium text-primary uppercase tracking-wider leading-snug wrap-break-words text-balance group-hover:text-accent transition-colors duration-300 cursor-pointer"
+                    >
                         {project.title}
                     </h3>
 
@@ -43,20 +58,21 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                     )}
                 </div>
 
-                {/* 3. Dedicated Action CTA */}
+                {/* 3. Dedicated Action CTA (Interactive Modal Preview Trigger) */}
                 <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
-                    <Link
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        draggable={false}
-                        className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-support/80 hover:text-accent group/btn transition-colors duration-300"
+                    <button
+                        type="button"
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onClick={handleOpenPreview}
+                        aria-label={`Preview ${project.title} project details`}
+                        className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-support/80 hover:text-accent group/btn transition-colors duration-300 cursor-pointer focus:outline-none focus:text-accent"
                     >
                         <span>View Project</span>
                         <span className="text-sm font-normal transform transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-0.5">
                             &#8599;
                         </span>
-                    </Link>
+                    </button>
                 </div>
             </div>
         </div>
